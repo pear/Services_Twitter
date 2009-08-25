@@ -37,11 +37,6 @@ try {
     echo $exc->getMessage() . "\n";
 }
 try {
-    $twitter->statuses->friends_timeline(array('since' => 'non_date'));
-} catch (Exception $exc) {
-    echo $exc->getMessage() . "\n";
-}
-try {
     $twitter->friendships->create("~~~~non user id~~~~");
 } catch (Exception $exc) {
     echo $exc->getMessage() . "\n";
@@ -83,7 +78,6 @@ Not enough arguments for /statuses/update
 /statuses/update: status must not exceed 140 chars
 /friendships/create/foo: follow must be a boolean
 /statuses/friends_timeline: since_id must be an integer
-/statuses/friends_timeline: since must be an HTTP-formatted date (ex: Tue, 27 Mar 2007 22:55:48 GMT)
 /friendships/create: id must be a valid id or screen name
 /account/update_delivery_device: device must be one of the following: none, sms, im
 /search: lang must be a valid iso-639-1 language code

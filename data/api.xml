@@ -18,26 +18,32 @@ http://pear.php.net/packages/Services_Twitter
 
 <api>
 
-    <!-- 
-    Status methods, documentation available at:
-    http://apiwiki.twitter.com/REST+API+Documentation#StatusMethods
-    -->
+    <!-- Status methods -->
     <category name="statuses">
         <endpoint name="public_timeline" method="GET" auth_required="false">
             <formats>xml,json,rss,atom</formats>
         </endpoint>
         <endpoint name="friends_timeline" method="GET" auth_required="true">
             <formats>xml,json,rss,atom</formats>
-            <param name="since" type="date" required="false"/>
             <param name="since_id" type="integer" required="false"/>
+            <param name="max_id" type="integer" required="false"/>
             <param name="count" type="integer" max_length="200" required="false"/>
             <param name="page" type="integer" required="false"/>
         </endpoint>
         <endpoint name="user_timeline" method="GET" auth_required="true">
             <formats>xml,json,rss,atom</formats>
             <param name="id" type="id_or_screenname" required="false"/>
-            <param name="since" type="date" required="false"/>
+            <param name="user_id" type="id_or_screenname" required="false"/>
+            <param name="screen_name" type="id_or_screenname" required="false"/>
             <param name="since_id" type="integer" required="false"/>
+            <param name="max_id" type="integer" required="false"/>
+            <param name="count" type="integer" max_length="200" required="false"/>
+            <param name="page" type="integer" required="false"/>
+        </endpoint>
+        <endpoint name="mentions" method="GET" auth_required="true">
+            <formats>xml,json,rss,atom</formats>
+            <param name="since_id" type="integer" required="false"/>
+            <param name="max_id" type="integer" required="false"/>
             <param name="count" type="integer" max_length="200" required="false"/>
             <param name="page" type="integer" required="false"/>
         </endpoint>
@@ -50,12 +56,6 @@ http://pear.php.net/packages/Services_Twitter
             <param name="status" type="string" max_length="140" required="true"/>
             <param name="in_reply_to_status_id" type="integer" required="false"/>
         </endpoint>
-        <endpoint name="replies" method="GET" auth_required="true">
-            <formats>xml,json,rss,atom</formats>
-            <param name="since" type="date" required="false"/>
-            <param name="since_id" type="integer" required="false"/>
-            <param name="page" type="integer" required="false"/>
-        </endpoint>
         <endpoint name="destroy" method="POST" auth_required="true">
             <formats>xml,json</formats>
             <param name="id" type="integer" required="true"/>
@@ -63,27 +63,25 @@ http://pear.php.net/packages/Services_Twitter
         <!-- 
         FIXME API inconsistency: the two endpoints below belong to user methods
         in the API documentation, but their path is set to "statuses", so we
-        keep them here for now.
-        Maybe we could duplicate them in the "users" category ?
-        I think they belong more to "users" category anyway...
+        keep them here.
         -->
         <endpoint name="friends" method="GET" auth_required="true">
             <formats>xml,json</formats>
             <param name="id" type="id_or_screenname" required="false"/>
-            <param name="since" type="date" required="false"/>
+            <param name="user_id" type="id_or_screenname" required="false"/>
+            <param name="screen_name" type="id_or_screenname" required="false"/>
             <param name="page" type="integer" required="false"/>
         </endpoint>
         <endpoint name="followers" method="GET" auth_required="true">
             <formats>xml,json</formats>
             <param name="id" type="id_or_screenname" required="false"/>
+            <param name="user_id" type="id_or_screenname" required="false"/>
+            <param name="screen_name" type="id_or_screenname" required="false"/>
             <param name="page" type="integer" required="false"/>
         </endpoint>
     </category>
 
-    <!-- 
-    User methods, documentation available at:
-    http://apiwiki.twitter.com/REST+API+Documentation#UserMethods
-    -->
+    <!-- User methods -->
     <category name="users">
         <endpoint name="show" method="GET" auth_required="true" min_args="1">
             <formats>xml,json</formats>
@@ -91,27 +89,28 @@ http://pear.php.net/packages/Services_Twitter
         </endpoint>
     </category>
 
-    <!-- 
-    Direct message methods, documentation available at:
-    http://apiwiki.twitter.com/REST+API+Documentation#DirectMessageMethods
-    -->
+    <!-- Direct message methods -->
     <category name="direct_messages">
         <endpoint name="direct_messages" method="GET" auth_required="true">
             <formats>xml,json,rss,atom</formats>
-            <param name="since" type="date" required="false"/>
             <param name="since_id" type="integer" required="false"/>
+            <param name="max_id" type="integer" required="false"/>
+            <param name="count" type="integer" max_length="200" required="false"/>
             <param name="page" type="integer" required="false"/>
         </endpoint>
         <endpoint name="sent" method="GET" auth_required="true">
             <formats>xml,json</formats>
-            <param name="since" type="date" required="false"/>
             <param name="since_id" type="integer" required="false"/>
+            <param name="max_id" type="integer" required="false"/>
+            <param name="count" type="integer" max_length="200" required="false"/>
             <param name="page" type="integer" required="false"/>
         </endpoint>
-        <endpoint name="new" method="POST" auth_required="true">
+        <endpoint name="new" method="POST" auth_required="true" min_args="2">
             <formats>xml,json</formats>
-            <param name="user" type="id_or_screenname" required="true"/>
+            <param name="user" type="id_or_screenname" required="false"/>
             <param name="text" type="string" max_length="140" required="true"/>
+            <param name="user_id" type="id_or_screenname" required="false"/>
+            <param name="screen_name" type="id_or_screenname" required="false"/>
         </endpoint>
         <endpoint name="destroy" method="POST" auth_required="true">
             <formats>xml,json</formats>
@@ -119,41 +118,66 @@ http://pear.php.net/packages/Services_Twitter
         </endpoint>
     </category>
 
-    <!--
-    Frienship methods, documentation available at:
-    http://apiwiki.twitter.com/REST+API+Documentation#FriendshipMethods
-    -->
+    <!-- Frienship methods -->
     <category name="friendships">
-        <endpoint name="create" method="POST" auth_required="true">
+        <endpoint name="create" method="POST" auth_required="true" min_args="1">
             <formats>xml,json</formats>
-            <param name="id" type="id_or_screenname" required="true"/>
+            <param name="id" type="id_or_screenname" required="false"/>
             <param name="follow" type="boolean" required="false"/>
+            <param name="user_id" type="id_or_screenname" required="false"/>
+            <param name="screen_name" type="id_or_screenname" required="false"/>
         </endpoint>
-        <endpoint name="destroy" method="POST" auth_required="true">
+        <endpoint name="destroy" method="POST" auth_required="true" min_args="1">
             <formats>xml,json</formats>
-            <param name="id" type="id_or_screenname" required="true"/>
+            <param name="id" type="id_or_screenname" required="false"/>
+            <param name="user_id" type="id_or_screenname" required="false"/>
+            <param name="screen_name" type="id_or_screenname" required="false"/>
         </endpoint>
         <endpoint name="exists" method="GET" auth_required="true">
             <formats>xml,json</formats>
             <param name="user_a" type="id_or_screenname" required="true"/>
             <param name="user_b" type="id_or_screenname" required="true"/>
         </endpoint>
+        <endpoint name="show" method="GET" auth_required="false" min_args="2">
+            <formats>xml,json</formats>
+            <param name="source_id" type="id_or_screenname" required="false"/>
+            <param name="source_screen_name" type="id_or_screenname" required="false"/>
+            <param name="target_id" type="id_or_screenname" required="false"/>
+            <param name="target_screen_name" type="id_or_screenname" required="false"/>
+        </endpoint>
     </category>
 
-    <!--
-    Account methods, documentation available at:
-    http://apiwiki.twitter.com/REST+API+Documentation#AccountMethods
-    -->
+    <!-- Social graph methods, divided in two categories: friends and followers -->
+    <category name="friends">
+        <endpoint name="ids" method="GET" auth_required="false" min_args="1">
+            <formats>xml,json</formats>
+            <param name="id" type="id_or_screenname" required="false"/>
+            <param name="user_id" type="id_or_screenname" required="false"/>
+            <param name="screen_name" type="id_or_screenname" required="false"/>
+            <param name="page" type="integer" required="false"/>
+        </endpoint>
+    </category>
+
+    <category name="followers">
+        <endpoint name="ids" method="GET" auth_required="false" min_args="1">
+            <formats>xml,json</formats>
+            <param name="id" type="id_or_screenname" required="false"/>
+            <param name="user_id" type="id_or_screenname" required="false"/>
+            <param name="screen_name" type="id_or_screenname" required="false"/>
+            <param name="page" type="integer" required="false"/>
+        </endpoint>
+    </category>
+
+    <!-- Account methods -->
     <category name="account">
         <endpoint name="verify_credentials" method="GET" auth_required="true">
             <formats>xml,json</formats>
         </endpoint>
-        <endpoint name="end_session" method="POST" auth_required="true">
+        <endpoint name="rate_limit_status" method="GET" auth_required="true">
             <formats>xml,json</formats>
         </endpoint>
-        <endpoint name="update_location" method="POST" auth_required="true">
+        <endpoint name="end_session" method="POST" auth_required="true">
             <formats>xml,json</formats>
-            <param name="location" type="string" required="true"/>
         </endpoint>
         <endpoint name="update_delivery_device" method="POST" auth_required="true">
             <formats>xml,json</formats>
@@ -174,9 +198,7 @@ http://pear.php.net/packages/Services_Twitter
         <endpoint name="update_profile_background_image" method="POST" auth_required="true">
             <formats>xml,json</formats>
             <param name="image" type="image" required="true"/>
-        </endpoint>
-        <endpoint name="rate_limit_status" method="GET" auth_required="true">
-            <formats>xml,json</formats>
+            <param name="tile" type="boolean" required="false"/>
         </endpoint>
         <endpoint name="update_profile" method="POST" auth_required="true" min_args="1">
             <formats>xml,json</formats>
@@ -188,10 +210,7 @@ http://pear.php.net/packages/Services_Twitter
         </endpoint>
     </category>
 
-    <!--
-    Favorites methods, documentation available at:
-    http://apiwiki.twitter.com/REST+API+Documentation#FavoritesMethods
-    -->
+    <!-- Favorites methods -->
     <category name="favorites">
         <endpoint name="favorites" method="GET" auth_required="true">
             <formats>xml,json,rss,atom</formats>
@@ -208,25 +227,23 @@ http://pear.php.net/packages/Services_Twitter
         </endpoint>
     </category>
 
-    <!--
-    Notification methods, documentation available at:
-    http://apiwiki.twitter.com/REST+API+Documentation#NotificationMethods
-    -->
+    <!-- Notification methods -->
     <category name="notifications">
-        <endpoint name="follow" method="POST" auth_required="true">
+        <endpoint name="follow" method="POST" auth_required="true" min_args="1">
             <formats>xml,json</formats>
-            <param name="id" type="id_or_screenname" required="true"/>
+            <param name="id" type="id_or_screenname" required="false"/>
+            <param name="user_id" type="id_or_screenname" required="false"/>
+            <param name="screen_name" type="id_or_screenname" required="false"/>
         </endpoint>
-        <endpoint name="leave" method="POST" auth_required="true">
+        <endpoint name="leave" method="POST" auth_required="true" min_args="1">
             <formats>xml,json</formats>
-            <param name="id" type="id_or_screenname" required="true"/>
+            <param name="id" type="id_or_screenname" required="false"/>
+            <param name="user_id" type="id_or_screenname" required="false"/>
+            <param name="screen_name" type="id_or_screenname" required="false"/>
         </endpoint>
     </category>
 
-    <!--
-    Block methods, documentation available at:
-    http://apiwiki.twitter.com/REST+API+Documentation#BlockMethods
-    -->
+    <!-- Block methods -->
     <category name="blocks">
         <endpoint name="create" method="POST" auth_required="true">
             <formats>xml,json</formats>
@@ -236,24 +253,47 @@ http://pear.php.net/packages/Services_Twitter
             <formats>xml,json</formats>
             <param name="id" type="id_or_screenname" required="true"/>
         </endpoint>
+        <endpoint name="exists" method="GET" auth_required="true" min_args="1">
+            <formats>xml,json</formats>
+            <param name="id" type="id_or_screenname" required="false"/>
+            <param name="user_id" type="id_or_screenname" required="false"/>
+            <param name="screen_name" type="id_or_screenname" required="false"/>
+        </endpoint>
+        <endpoint name="blocking" method="GET" auth_required="true">
+            <param name="page" type="integer" required="false"/>
+        </endpoint>
+        <!-- TODO add blocks/blocking/ids but this is not currently possible -->
     </category>
 
-    <!--
-    Help methods, documentation available at:
-    http://apiwiki.twitter.com/REST+API+Documentation#HelpMethods
-    -->
+    <!-- Saved searches methods -->
+    <category name="saved_searches">
+        <endpoint name="saved_searches" method="GET" auth_required="true">
+            <formats>xml,json</formats>
+        </endpoint>
+        <endpoint name="show" method="GET" auth_required="false">
+            <formats>xml,json</formats>
+            <param name="id" type="integer" required="true"/>
+        </endpoint>
+        <endpoint name="create" method="POST" auth_required="true">
+            <formats>xml,json</formats>
+            <param name="query" type="string" required="true"/>
+        </endpoint>
+        <endpoint name="destroy" method="POST" auth_required="true">
+            <formats>xml,json</formats>
+            <param name="id" type="integer" required="true"/>
+        </endpoint>
+    </category>
+
+    <!-- TODO: add OAuth methods -->
+
+    <!-- Help methods -->
     <category name="help">
         <endpoint name="test" method="GET" auth_required="false">
             <formats>xml,json</formats>
         </endpoint>
-        <endpoint name="downtime_schedule" method="GET" auth_required="false">
-            <formats>xml,json</formats>
-        </endpoint>
     </category>
 
-    <!--
-    Search API methods, documentation available at:
-    -->
+    <!-- Search API methods -->
     <category name="search">
         <endpoint name="search" method="GET" auth_required="false">
             <formats>json,atom</formats>
@@ -269,6 +309,20 @@ http://pear.php.net/packages/Services_Twitter
     <category name="trends">
         <endpoint name="trends" method="GET" auth_required="false">
             <formats>json</formats>
+        </endpoint>
+        <endpoint name="current" method="GET" auth_required="false">
+            <formats>json</formats>
+            <param name="exclude" type="string" required="false"/>
+        </endpoint>
+        <endpoint name="daily" method="GET" auth_required="false">
+            <formats>json</formats>
+            <param name="date" type="date" required="false"/>
+            <param name="exclude" type="string" required="false"/>
+        </endpoint>
+        <endpoint name="weekly" method="GET" auth_required="false">
+            <formats>json</formats>
+            <param name="date" type="date" required="false"/>
+            <param name="exclude" type="string" required="false"/>
         </endpoint>
     </category>
 

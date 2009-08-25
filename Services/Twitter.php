@@ -511,17 +511,16 @@ class Services_Twitter
             // we have a POST method and a registered source to pass
             $params['source'] = $this->options['source'];
         }
-        $xpath        = 'param[@required="true" or @required="1"]';
-        $requiredArgs = count($endpoint->xpath($xpath));
-        if (!$requiredArgs && (isset($args[0]) && !is_array($args[0]))) {
+        $minargs = isset($endpoint['min_args'])
+            ? (int)$endpoint['min_args']
+            : count($endpoint->xpath('param[@required="true" or @required="1"]'));
+        if (!$minargs && (isset($args[0]) && !is_array($args[0]))) {
             throw new Services_Twitter_Exception(
                 $path . ' expects an array as unique parameter',
                 self::ERROR_PARAMS,
                 $path
             );
         }
-        $minargs = isset($endpoint['min_args']) ? 
-            (int)$endpoint['min_args'] : $requiredArgs;
         if ($minargs && (!isset($args[0]) || 
             is_array($args[0]) && $minargs > count($args[0]))) {
             throw new Services_Twitter_Exception(
@@ -530,16 +529,19 @@ class Services_Twitter
                 $path
             );
         }
+        $needargs = $minargs;
         foreach ($endpoint->param as $param) {
             $pName      = (string)$param['name'];
             $pType      = (string)$param['type'];
             $pMaxLength = (int)$param['max_length'];
             $pMaxLength = $pMaxLength > 0 ? $pMaxLength : null;
-            $pReq       = (string)$param['required'] == 'true';
+            $pReq       = (string)$param['required'] == 'true' || $needargs;
             if ($pReq && !is_array($args[0])) {
                 $arg = array_shift($args);
+                $needargs--;
             } else if (isset($args[0][$pName])) {
                 $arg = $args[0][$pName];
+                $needargs--;
             } else {
                 continue;
             }

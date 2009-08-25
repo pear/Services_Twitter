@@ -24,7 +24,13 @@
         <email>izi@php.net</email>
         <active>yes</active>
     </lead>
-    <date>2009-01-05</date>
+    <lead>
+        <name>Bill Shupp</name>
+        <user>shupp</user>
+        <email>hostmaster@shupp.org</email>
+        <active>yes</active>
+    </lead>
+    <date>2009-09-28</date>
     <version>
         <release>0.3.0</release>
         <api>0.3.0</api>
@@ -36,14 +42,52 @@
     <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
     <notes>
 <![CDATA[
-* removed endpoints code in favor of a xml definition and generic methods [izi];
-* better validation of parameters [izi];
-* update API changes and add the new API methods (update_account, update_background_image etc...) [izi];
+General changes and bug fixes:
+------------------------------
+* moved code to svn.php.net (fixes bug #16534) [izi]
+* removed endpoints code (hard to maintain) in favor of a xml definition file and generic methods (fixes #15472) [izi]
+* better validation of parameters [izi]
 * switch to JSON format as default (XML is still available) [izi]
-* switch to HTTP_Request2 [izi];
-* make the test suite runnable locally with mock HTTP responses and improved code coverage (near 100%) [izi]; 
-* cosmetic CS changes (removed licence in source code, added vim folds etc...) [izi];
-* fixed bugs #15072 #15084 #15085 #15358 and #15472 [izi].
+* switch to HTTP_Request2 (fixes bug #15072) [izi]
+* make the test suite runnable locally with mock HTTP responses (fixes bug #15084 #15085), coverage is now 100% [izi]
+* updated dependencies in package.xml (fixes bug #16522) [izi]
+
+
+Search API changes:
+-------------------
++ added trends/current method [izi]
++ added trends/daily method [izi]
++ added trends/weekly method [izi]
+
+REST API changes:
+-----------------
+* statuses/friends_timeline: removed "since" parameter (no longer supported) and added "max_id" parameter [izi]
+* statuses/user_timeline: removed "since" parameter (no longer supported) and added "user_id" and "screen_name" parameters [izi]
++ added statuses/mentions method (fixes bug #16475) [izi]
+- removed statuses/replies (no longer supported) [izi]
+* statuses/friends: removed "since" parameter (no longer supported) and added "user_id" and "screen_name" parameters [izi]
+* statuses/followers: added "user_id" and "screen_name" parameters [izi]
+* direct_messages: removed "since" parameter (no longer supported) and added "max_id" and "count" parameters [izi]
+* direct_messages/sent: removed "since" parameter (no longer supported) and added "max_id" and "count" parameters [izi]
+* direct_messages/new: added "user_id" and "screen_name" parameters [izi]
+* friendships/create: added "user_id" and "screen_name" parameters [izi]
+* friendships/destroy: added "user_id" and "screen_name" parameters [izi]
++ added friendships/show method [izi]
++ added "Social Graph methods": friends/ids and followers/ids [izi]
+* notifications/follow: added "user_id" and "screen_name" parameters [izi]
+* notifications/leave: added "user_id" and "screen_name" parameters [izi]
++ added account/update_profile_colors
++ added account/update_delivery_device
++ added account/update_profile_image
++ added account/update_profile_background_image
++ added account/update_profile
++ added blocks/exists [izi]
++ added blocks/blocking [izi]
++ added saved_searches [izi]
++ added saved_searches/show [izi]
++ added saved_searches/create [izi]
++ added saved_searches/destroy [izi]
+- removed help/downtime_schedule (no longer supported) [izi]
 ]]>
     </notes>
     <contents>
@@ -69,7 +113,6 @@
                 <file name="020-statuses-user_timeline.phpt" role="test"/>
                 <file name="030-statuses-show.phpt" role="test"/>
                 <file name="040-statuses-update-destroy.phpt" role="test"/>
-                <file name="050-statuses-replies.phpt" role="test"/>
                 <file name="060-statuses-friends.phpt" role="test"/>
                 <file name="070-statuses-followers.phpt" role="test"/>
                 <file name="100-users-show.phpt" role="test"/>
@@ -80,7 +123,6 @@
                 <file name="310-friendships-exists.phpt" role="test"/>
                 <file name="400-account-verify_credentials.phpt" role="test"/>
                 <file name="410-account-end_session.phpt" role="test"/>
-                <file name="420-account-update_location.phpt" role="test"/>
                 <file name="430-account-update_delivery_device.phpt" role="test"/>
                 <file name="440-account-rate_limit_status.phpt" role="test"/>
                 <file name="460-account-update_profile_image.phpt" role="test"/>
@@ -92,7 +134,6 @@
                 <file name="600-notifications-follow-leave.phpt" role="test"/>
                 <file name="700-blocks-create-destroy.phpt" role="test"/>
                 <file name="800-help-test.phpt" role="test"/>
-                <file name="810-help-downtime_schedule.phpt" role="test"/>
                 <file name="900-exceptions.phpt" role="test"/>
                 <file name="910-options.phpt" role="test"/>
                 <file name="920-utf8.phpt" role="test"/>
@@ -171,10 +212,19 @@
             <pearinstaller>
                 <min>1.4.0b1</min>
             </pearinstaller>
+            <package>
+                <name>HTTP_Request2</name>
+                <channel>pear.php.net</channel>
+            </package>
             <extension>
-                <name>curl</name>
+                <name>json</name>
             </extension>
         </required>
+        <optional>
+            <extension>
+                <name>simplexml</name>
+            </extension>
+        </optional>
     </dependencies>
     <phprelease />
     <changelog>
