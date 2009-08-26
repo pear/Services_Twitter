@@ -496,22 +496,30 @@ class Services_Twitter
     {
         $params = array();
         $files  = array();
+
+        // check if we have is a search or trends call, in this case the base 
+        // uri is different
         if ($cat == 'search' || (string)$endpoint['name'] == 'search' ||
             $cat == 'trends' || (string)$endpoint['name'] == 'trends') {
             $uri = self::$searchUri;
         } else {
             $uri = self::$uri;
         }
+
+        // build the uri path
         $path = '/';
         if ($cat !== null) {
             $path .= $cat . '/';
         }
         $method = (string)$endpoint['method'];
         $path  .= (string)$endpoint['name'];
+
+        // check if we have a POST method and a registered source to pass
         if ($method == 'POST' && $this->options['source'] !== null) {
-            // we have a POST method and a registered source to pass
             $params['source'] = $this->options['source'];
         }
+        
+        // check arguments requirements
         $minargs = isset($endpoint['min_args'])
             ? (int)$endpoint['min_args']
             : count($endpoint->xpath('param[@required="true" or @required="1"]'));
@@ -531,6 +539,9 @@ class Services_Twitter
             );
         }
         $needargs = $minargs;
+
+        // now process arguments according to their definition in the xml 
+        // mapping
         foreach ($endpoint->param as $param) {
             $pName      = (string)$param['name'];
             $pType      = (string)$param['type'];
@@ -544,11 +555,6 @@ class Services_Twitter
                 $arg = $args[0][$pName];
                 $needargs--;
             } else {
-                continue;
-            }
-            if ($path == '/users/show' && strpos($arg, '@') !== false) {
-                // XXX fixes Twitter API inconsistency in /users/show endpoint
-                $params['email'] = $arg;
                 continue;
             }
             try {

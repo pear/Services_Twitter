@@ -32,7 +32,6 @@ if (false === @include_once $cfgfile) {
     $config = array(
         'user'      => 'test_user',
         'pass'      => 'test_password',
-        'email'     => 'test@example.com',
         'friend'    => 'test_friend',
         'status_id' => 100000,
         'live_test' => false,
