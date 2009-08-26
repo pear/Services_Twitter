@@ -496,7 +496,8 @@ class Services_Twitter
     {
         $params = array();
         $files  = array();
-        if (in_array((string)$endpoint['name'], array('search', 'trends'))) {
+        if ($cat == 'search' || (string)$endpoint['name'] == 'search' ||
+            $cat == 'trends' || (string)$endpoint['name'] == 'trends') {
             $uri = self::$searchUri;
         } else {
             $uri = self::$uri;
@@ -684,12 +685,11 @@ class Services_Twitter
         case 'date':
             if (is_numeric($val)) {
                 // we have a timestamp
-                $val = date('r', $val);
+                $val = date('Y-m-d', $val);
             } else {
-                $rx = '/^\w+,\s+\d+\s+\w+\s+\d+\s+\d+:\d+:\d+.+$/';
+                $rx = '/^\d{4}\-\d{2}\-\d{2}$/';
                 if (!preg_match($rx, $val)) {
-                    $msg = $name . ' must be an HTTP-formatted date '
-                         . '(ex: Tue, 27 Mar 2007 22:55:48 GMT)';
+                    $msg = $name . ' should be formatted YYYY-MM-DD';
                 }
             }
             break;

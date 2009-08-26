@@ -63,6 +63,6 @@ Foo
 <?xml version="1.0" encoding="UTF-8"?>
 <status>
   %s
-  <source>&lt;a href=&quot;http://pear.php.net/package/Services_Twitter&quot;&gt;PEAR Services_Twitter&lt;/a&gt;</source>
+  <source>&lt;a href=%shttp://pear.php.net/package/Services_Twitter%s&gt;PEAR Services_Twitter&lt;/a&gt;</source>
   %s
 </status>
