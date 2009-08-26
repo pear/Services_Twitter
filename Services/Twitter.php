@@ -563,18 +563,8 @@ class Services_Twitter
             if ($pName == 'id') {
                 $path .= '/' . $arg;
             } else {
-                if ($pType == 'string' && !preg_match('%^(?:
-                        [\x09\x0A\x0D\x20-\x7E]            # ASCII
-                      | [\xC2-\xDF][\x80-\xBF]             # non-overlong 2-byte
-                      |  \xE0[\xA0-\xBF][\x80-\xBF]        # excluding overlongs
-                      | [\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}  # straight 3-byte
-                      |  \xED[\x80-\x9F][\x80-\xBF]        # excluding surrogates
-                      |  \xF0[\x90-\xBF][\x80-\xBF]{2}     # planes 1-3
-                      | [\xF1-\xF3][\x80-\xBF]{3}          # planes 4-15
-                      |  \xF4[\x80-\x8F][\x80-\xBF]{2}     # plane 16
-                    )*$%xs', $arg)) {
-                    // we have an iso-8859-1 string that we must convert to 
-                    // unicode
+                if ($pType == 'string' && !$this->isUnicode($arg)) {
+                    // iso-8859-1 string that we must convert to unicode
                     $arg = utf8_encode($arg);
                 }
                 if ($pType == 'image') {
@@ -730,6 +720,30 @@ class Services_Twitter
         if ($msg !== null) {
             throw new Services_Twitter_Exception($msg, self::ERROR_PARAMS);
         }
+    }
+
+    // }}}
+    // isUnicode() {{{
+
+    /**
+     * Check if the given string is a unicode string or an iso-8859-1 one.
+     *
+     * @param string $str The string to check
+     *
+     * @return boolean Wether the string is unicode or not
+     */
+    protected function isUnicode($str)
+    {
+        return !preg_match('%^(?:
+              [\x09\x0A\x0D\x20-\x7E]            # ASCII
+            | [\xC2-\xDF][\x80-\xBF]             # non-overlong 2-byte
+            |  \xE0[\xA0-\xBF][\x80-\xBF]        # excluding overlongs
+            | [\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}  # straight 3-byte
+            |  \xED[\x80-\x9F][\x80-\xBF]        # excluding surrogates
+            |  \xF0[\x90-\xBF][\x80-\xBF]{2}     # planes 1-3
+            | [\xF1-\xF3][\x80-\xBF]{3}          # planes 4-15
+            |  \xF4[\x80-\x8F][\x80-\xBF]{2}     # plane 16
+        )*$%xs', $str);
     }
 
     // }}}
