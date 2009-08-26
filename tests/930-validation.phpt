@@ -57,6 +57,11 @@ try {
     echo $exc->getMessage() . "\n";
 }
 try {
+    $twitter->trends->daily(array('date'=>'This is not a date !'));
+} catch (Exception $exc) {
+    echo $exc->getMessage() . "\n";
+}
+try {
     $twitter->account->update_profile_colors(
         array('profile_text_color' => 'bar')
     );
@@ -82,5 +87,6 @@ Not enough arguments for /statuses/update
 /account/update_delivery_device: device must be one of the following: none, sms, im
 /search: lang must be a valid iso-639-1 language code
 /search: geocode must be "latitide,longitude,radius(km or mi)"
+/trends/daily: date should be formatted YYYY-MM-DD
 /account/update_profile_colors: profile_text_color must be an hexadecimal color code (eg. fff)
 /account/update_profile_image: image must be a valid image path

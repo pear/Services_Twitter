@@ -427,15 +427,13 @@ class Services_Twitter
     protected function decodeBody($body)
     {
 
-        switch ($this->options['format']) {
-        case Services_Twitter::OUTPUT_JSON:
-            $result = json_decode($body);
-            $isbool = ($result == 'true' || $result == 'false');
-            break;
-        case Services_Twitter::OUTPUT_XML:
+        if ($this->options['format'] == Services_Twitter::OUTPUT_XML) {
             $result = simplexml_load_string($body);
             $isbool = ((string)$result == 'true' || (string)$result == 'false');
-            break;
+        } else { 
+            // default to Services_Twitter::OUTPUT_JSON
+            $result = json_decode($body);
+            $isbool = ($result == 'true' || $result == 'false');
         }
         // special case where the API returns true/false strings
         if ($isbool) {
@@ -455,14 +453,10 @@ class Services_Twitter
     protected function loadAPI()
     {
         // initialize xml mapping
-        if (is_dir('@data_dir@')) {
-            $d = implode(DIRECTORY_SEPARATOR, 
-                array('@data_dir@', 'Services_Twitter', 'data'));
-        } else {
-            $d = implode(DIRECTORY_SEPARATOR,
-                array(dirname(__FILE__), '..', 'data'));
-        }
-        $d .= DIRECTORY_SEPARATOR;
+        $p = is_dir('@data_dir@') 
+            ? array('@data_dir@', 'Services_Twitter', 'data')
+            : array(dirname(__FILE__), '..', 'data');
+        $d = implode(DIRECTORY_SEPARATOR, $p) . DIRECTORY_SEPARATOR;
         if ($this->options['validate'] && class_exists('DomDocument')) {
             // this should be done only when testing
             $doc = new DomDocument();
