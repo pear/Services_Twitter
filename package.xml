@@ -42,7 +42,8 @@
     <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
     <notes>
 <![CDATA[
-This is a major update of Services_Twitter with some backward incompatible change. Please read this before upgrading.
+This is a major update of Services_Twitter with some backward incompatible changes. 
+Please read this carefully before upgrading.
 
 General changes and bug fixes:
 ------------------------------
@@ -94,7 +95,7 @@ REST API changes:
 
 *** IMPORTANT: BACKWARD INCOMPATIBLE CHANGES ***
 
-- $twitter->search->query() is replaced by $twitter->search() (you can also write $twitter->search->search())
+- $twitter->search->query() has been replaced by $twitter->search() (you can also write $twitter->search->search())
 - the twitter API has changed, so some methods have been updated, removed or added (see above), you'll have probably to update your code
 - there are maybe some others incompatible changes, but it will be trivial to update your code
 
