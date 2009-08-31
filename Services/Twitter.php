@@ -563,7 +563,7 @@ class Services_Twitter
             if ($pName == 'id') {
                 $path .= '/' . $arg;
             } else {
-                if ($pType == 'string' && !$this->isUnicode($arg)) {
+                if ($pType == 'string' && !$this->isUtf8($arg)) {
                     // iso-8859-1 string that we must convert to unicode
                     $arg = utf8_encode($arg);
                 }
@@ -723,18 +723,18 @@ class Services_Twitter
     }
 
     // }}}
-    // isUnicode() {{{
+    // isUtf8() {{{
 
     /**
-     * Check if the given string is a unicode string or an iso-8859-1 one.
+     * Check if the given string is a UTF-8 string or an iso-8859-1 one.
      *
      * @param string $str The string to check
      *
      * @return boolean Wether the string is unicode or not
      */
-    protected function isUnicode($str)
+    protected function isUtf8($str)
     {
-        return !preg_match('%^(?:
+        return (bool)preg_match('%^(?:
               [\x09\x0A\x0D\x20-\x7E]            # ASCII
             | [\xC2-\xDF][\x80-\xBF]             # non-overlong 2-byte
             |  \xE0[\xA0-\xBF][\x80-\xBF]        # excluding overlongs
