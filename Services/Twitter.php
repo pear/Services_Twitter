@@ -11,6 +11,7 @@
  * @package   Services_Twitter
  * @author    Joe Stump <joe@joestump.net> 
  * @author    David Jean Louis <izimobil@gmail.com> 
+ * @author    Bill Shupp <shupp@php.net>
  * @copyright 1997-2008 Joe Stump <joe@joestump.net> 
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   SVN: $Id: Twitter.php 40 2009-01-07 12:40:35Z izimobil $
@@ -28,6 +29,8 @@ require_once 'Services/Twitter/Exception.php';
 /**
  * Base class for interacting with Twitter's API.
  *
+ * Here's a basic auth example:
+ *
  * <code>
  * require_once 'Services/Twitter.php';
  *
@@ -44,6 +47,28 @@ require_once 'Services/Twitter/Exception.php';
  *
  * </code>
  *
+ * Here's an OAuth example:
+ *
+ * <code>
+ * require_once 'Services/Twitter.php';
+ * require_once 'HTTP/OAuth/Consumer.php';
+ *
+ *
+ * try {
+ *     $twitter = new Services_Twitter();
+ *     $oauth   = new HTTP_OAuth_Consumer('consumer_key',
+ *                                        'consumer_secret',
+ *                                        'auth_token',
+ *                                        'token_secret');
+ *     $twitter->setOAuth($oauth);
+ *
+ *     $msg = $twitter->statuses->update("I'm coding with PEAR right now!");
+ *     print_r($msg);
+ * } catch (Services_Twitter_Exception $e) {
+ *     echo $e->getMessage(); 
+ * }
+ *
+ * </code>
  * @category Services
  * @package  Services_Twitter
  * @author   Joe Stump <joe@joestump.net> 
@@ -110,6 +135,14 @@ class Services_Twitter
      * @see Services_Twitter::__construct()
      */
     protected $pass = '';
+
+    /**
+     * Optional instance of HTTP_OAuth_Consumer
+     * 
+     * @var HTTP_OAuth_Consumer $oauth
+     * @see HTTP_OAuth_Consumer
+     */
+    protected $oauth = null;
 
     /**
      * Options for HTTP requests and misc.
@@ -280,7 +313,11 @@ class Services_Twitter
             $this->prepareRequest($ep, $args, $cat);
 
         // we can now send our request
-        $resp = $this->sendRequest($uri, $method, $params, $files);
+        if ($this->oauth instanceof HTTP_OAuth_Consumer) {
+            $resp = $this->sendOAuthRequest($uri, $method, $params, $files);
+        } else {
+            $resp = $this->sendRequest($uri, $method, $params, $files);
+        }
         $body = $resp->getBody();
 
         // check for errors
@@ -303,6 +340,46 @@ class Services_Twitter
             return $body;
         }
         return $this->decodeBody($body);
+    }
+
+    /**
+     * Sends a request using OAuth instead of basic auth
+     * 
+     * @param string $uri    The full URI of the endpoint
+     * @param string $method GET or POST
+     * @param array $params  Array of additional parameter
+     * @param array $files   Array of files to upload
+     * 
+     * @throws Services_Twitter_Exception on failure
+     * @return HTTP_Request2_Response
+     * @see prepareRequest()
+     */
+    protected function sendOAuthRequest($uri, $method, $params, $files)
+    {
+        include_once 'HTTP/OAuth/Consumer/Request.php';
+        try {
+            $request = clone $this->getRequest();
+
+            if ($method == 'POST') {
+                foreach ($files as $key => $val) {
+                    $request->addUpload($key, $val);
+                }
+            }
+
+            // Use the same instance of HTTP_Request2
+            $consumerRequest = new HTTP_OAuth_Consumer_Request;
+            $consumerRequest->accept($request);
+            $this->oauth->accept($consumerRequest);
+
+            $response = $this->oauth->sendRequest($uri, $params, $method);
+        } catch (HTTP_Request2_Exception $exc) {
+            throw new Services_Twitter_Exception(
+                $exc->getMessage(),
+                $exc, // the original exception cause
+                $uri
+            );
+        }
+        return $response;
     }
 
     // }}}
@@ -329,6 +406,20 @@ class Services_Twitter
         } else {
             $this->options[$option] = $value;
         } 
+    }
+
+    /**
+     * Sets an instance of HTTP_OAuth_Consumer
+     * 
+     * @param HTTP_OAuth_Consumer $oauth Object containing OAuth credentials
+     * 
+     * @see $oauth
+     * @see $sendOAuthRequest
+     * @return void
+     */
+    public function setOAuth(HTTP_OAuth_Consumer $oauth)
+    {
+        $this->oauth = $oauth;
     }
 
     // }}}
