@@ -20,8 +20,8 @@ class MyTwitter extends Services_Twitter {
         echo 'FooBar says: ' . $value . "\n";
     }
 }
-$twitter = new MyTwitter();
-$twitter->setOption('fooBar', 'hey !');
+$twitter = new MyTwitter('foo', 'bar', array('fooBar' => 'hey!'));
+$twitter->setOption('fooBar', 'ho, let\'s go!');
 
 
 require_once 'HTTP/Request2/Response.php';
@@ -48,17 +48,20 @@ echo $status;
 --EXPECTF--
 string(25) "MyRegisteredTwitterSource"
 NULL
-array(4) {
+array(5) {
   ["format"]=>
   string(3) "xml"
   ["raw_format"]=>
   bool(true)
   ["source"]=>
   string(25) "MyRegisteredTwitterSource"
+  ["use_ssl"]=>
+  bool(false)
   ["validate"]=>
   bool(true)
 }
-FooBar says: hey !
+FooBar says: hey!
+FooBar says: ho, let's go!
 Foo
 <?xml version="1.0" encoding="UTF-8"?>
 <status>

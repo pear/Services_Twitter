@@ -153,6 +153,8 @@ class Services_Twitter
      * - source: you can set this if you have registered a twitter source 
      *   {@see http://twitter.com/help/request_source}, your source will be 
      *   passed with each POST request,
+     * - use_ssl: whether to send all requests over ssl or not. If set to true, the 
+     *   script will replace the http:// URL scheme with https://,
      * - validate: if set to true the class will validate api xml file against 
      *   the RelaxNG file (you should not need this unless you are hacking 
      *   Services_Twitter...).
@@ -170,6 +172,7 @@ class Services_Twitter
         'format'     => self::OUTPUT_JSON,
         'raw_format' => false,
         'source'     => 'pearservicestwitter',
+        'use_ssl'    => false,
         'validate'   => false,
     );
 
@@ -223,12 +226,9 @@ class Services_Twitter
         // set properties and options
         $this->user = $user;
         $this->pass = $pass;
-        foreach ($options as $option => $value) {
-            if (array_key_exists($option, $this->options)) {
-                $this->options[$option] = $value;
-            }
-        }
-        // set default request
+        $this->setOptions($options);
+
+        // load the XML API definition
         $this->loadAPI();
     }
 
@@ -296,10 +296,10 @@ class Services_Twitter
 
         // check that endpoint is available in the configured format
         $formats = explode(',', (string)$ep->formats);
-        if (!in_array($this->options['format'], $formats)) {
+        if (!in_array($this->getOption('format'), $formats)) {
             throw new Services_Twitter_Exception(
                 'Endpoint ' . $endpoint . ' does not support '
-                . $this->options['format'] . ' format',
+                . $this->getOption('format') . ' format',
                 self::ERROR_ENDPOINT
             );
         }
@@ -336,11 +336,14 @@ class Services_Twitter
             );
         }
 
-        if ($this->options['raw_format']) {
+        if ($this->getOption('raw_format')) {
             return $body;
         }
         return $this->decodeBody($body);
     }
+
+    // }}}
+    // sendOAuthRequest() {{{
 
     /**
      * Sends a request using OAuth instead of basic auth
@@ -405,7 +408,7 @@ class Services_Twitter
             $this->$func($value);
         } else {
             $this->options[$option] = $value;
-        } 
+        }
     }
 
     /**
@@ -487,6 +490,11 @@ class Services_Twitter
         if ($this->request === null) {
             $this->request = new HTTP_Request2();
         }
+        if ($this->getOption('use_ssl')) {
+            // XXX ssl won't work with ssl_verify_peer set to true, which is 
+            // the default in HTTP_Request2
+            $this->request->setConfig('ssl_verify_peer', false);
+        }
         return $this->request;
     }
     
@@ -518,7 +526,7 @@ class Services_Twitter
     protected function decodeBody($body)
     {
 
-        if ($this->options['format'] == Services_Twitter::OUTPUT_XML) {
+        if ($this->getOption('format') == Services_Twitter::OUTPUT_XML) {
             $result = simplexml_load_string($body);
             $isbool = ((string)$result == 'true' || (string)$result == 'false');
         } else { 
@@ -548,7 +556,7 @@ class Services_Twitter
             ? array('@data_dir@', 'Services_Twitter', 'data')
             : array(dirname(__FILE__), '..', 'data');
         $d = implode(DIRECTORY_SEPARATOR, $p) . DIRECTORY_SEPARATOR;
-        if ($this->options['validate'] && class_exists('DomDocument')) {
+        if ($this->getOption('validate') && class_exists('DomDocument')) {
             // this should be done only when testing
             $doc = new DomDocument();
             $doc->load($d . 'api.xml');
@@ -591,6 +599,11 @@ class Services_Twitter
             $uri = self::$uri;
         }
 
+        // ssl requested
+        if ($this->getOption('use_ssl')) {
+            $uri = str_replace('http://', 'https://', $uri);
+        }
+
         // build the uri path
         $path = '/';
         if ($cat !== null) {
@@ -600,8 +613,9 @@ class Services_Twitter
         $path  .= (string)$endpoint['name'];
 
         // check if we have a POST method and a registered source to pass
-        if ($method == 'POST' && $this->options['source'] !== null) {
-            $params['source'] = $this->options['source'];
+        $source = $this->getOption('source');
+        if ($method == 'POST' && $source !== null) {
+            $params['source'] = $source;
         }
         
         // check arguments requirements
@@ -666,7 +680,7 @@ class Services_Twitter
                 }
             }
         }
-        $uri .= $path . '.' . $this->options['format'];
+        $uri .= $path . '.' . $this->getOption('format');
         return array($uri, $method, $params, $files);
     }
 
