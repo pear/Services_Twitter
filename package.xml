@@ -30,10 +30,10 @@
         <email>hostmaster@shupp.org</email>
         <active>yes</active>
     </lead>
-    <date>2009-08-26</date>
+    <date>2009-09-14</date>
     <version>
-        <release>0.3.0</release>
-        <api>0.3.0</api>
+        <release>0.4.0</release>
+        <api>0.4.0</api>
     </version>
     <stability>
         <release>beta</release>
@@ -42,63 +42,16 @@
     <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
     <notes>
 <![CDATA[
-This is a major update of Services_Twitter with some backward incompatible changes. 
-Please read this carefully before upgrading.
+New Features:
+-------------
+* OAuth support [shupp]
+* SSL support [izi]
 
-General changes and bug fixes:
-------------------------------
-* moved code to svn.php.net (fixes bug #16534) [izi]
-* removed endpoints code (hard to maintain) in favor of a xml definition file and generic methods (fixes #15472) [izi]
-* better validation of parameters [izi]
-* switch to JSON format as default (XML is still available) [izi]
-* switch to HTTP_Request2 (fixes bug #15072) [izi]
-* make the test suite runnable locally with mock HTTP responses (fixes bug #15084 #15085), coverage is now 100% [izi]
-* updated dependencies in package.xml (fixes bug #16522) [izi]
-* automagically convert all strings to unicode before sending them to twitter [izi]
-
-Search API changes:
+Fixes/improvements:
 -------------------
-+ added trends/current method [izi]
-+ added trends/daily method [izi]
-+ added trends/weekly method [izi]
-
-REST API changes:
------------------
-* statuses/friends_timeline: removed "since" parameter (no longer supported) and added "max_id" parameter [izi]
-* statuses/user_timeline: removed "since" parameter (no longer supported) and added "user_id" and "screen_name" parameters [izi]
-+ added statuses/mentions method (fixes bug #16475) [izi]
-- removed statuses/replies (no longer supported) [izi]
-* statuses/friends: removed "since" parameter (no longer supported) and added "user_id" and "screen_name" parameters [izi]
-* statuses/followers: added "user_id" and "screen_name" parameters [izi]
-* direct_messages: removed "since" parameter (no longer supported) and added "max_id" and "count" parameters [izi]
-* direct_messages/sent: removed "since" parameter (no longer supported) and added "max_id" and "count" parameters [izi]
-* direct_messages/new: added "user_id" and "screen_name" parameters [izi]
-* friendships/create: added "user_id" and "screen_name" parameters [izi]
-* friendships/destroy: added "user_id" and "screen_name" parameters [izi]
-* users/show: removed "email" parameter, no longer supported by the API [izi]
-+ added friendships/show method [izi]
-+ added "Social Graph methods": friends/ids and followers/ids [izi]
-* notifications/follow: added "user_id" and "screen_name" parameters [izi]
-* notifications/leave: added "user_id" and "screen_name" parameters [izi]
-+ added account/update_profile_colors [izi]
-+ added account/update_delivery_device [izi]
-+ added account/update_profile_image [izi]
-+ added account/update_profile_background_image [izi]
-+ added account/update_profile [izi]
-+ added blocks/exists [izi]
-+ added blocks/blocking [izi]
-+ added saved_searches [izi]
-+ added saved_searches/show [izi]
-+ added saved_searches/create [izi]
-+ added saved_searches/destroy [izi]
-- removed help/downtime_schedule (no longer supported) [izi]
-
-*** IMPORTANT: BACKWARD INCOMPATIBLE CHANGES ***
-
-- $twitter->search->query() has been replaced by $twitter->search() (you can also write $twitter->search->search())
-- the twitter API has changed, so some methods have been updated, removed or added (see above), you'll have probably to update your code
-- there are maybe some others incompatible changes, but it will be trivial to update your code
-
+* Fixed a bug in UTF8 detection [izi]
+* Fixed some unit tests [izi]
+* make use of setOption/getOption internally instead of manipulating the options array directly [izi]
 ]]>
     </notes>
     <contents>
@@ -152,6 +105,8 @@ REST API changes:
                 <file name="910-options.phpt" role="test"/>
                 <file name="920-utf8.phpt" role="test"/>
                 <file name="930-validation.phpt" role="test"/>
+                <file name="940-oauth.phpt" role="test"/>
+                <file name="950-ssl.phpt" role="test"/>
                 <file name="AllTests.php" role="test">
                     <tasks:replace from="@package_version@" to="version" type="package-info" />
                 </file>
@@ -242,6 +197,11 @@ REST API changes:
             </extension>
         </required>
         <optional>
+            <package>
+                <name>HTTP_OAuth</name>
+                <channel>pear.php.net</channel>
+                <min>0.1.2</min>
+            </package>
             <extension>
                 <name>simplexml</name>
             </extension>
@@ -340,6 +300,79 @@ REST API changes:
 * Added Services_Twitter_Account::update_delivery_device() method (jstump)
 * Added Services_Twitter_Search::trends() method (jstump)
 * Added Services_Twitter_Search::query() method (jstump)
+]]>
+            </notes>
+        </release>
+        <release>
+            <date>2009-08-26</date>
+            <version>
+                <release>0.3.0</release>
+                <api>0.3.0</api>
+            </version>
+            <stability>
+                <release>beta</release>
+                <api>beta</api>
+            </stability>
+            <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
+            <notes>
+<![CDATA[
+This is a major update of Services_Twitter with some backward incompatible changes. 
+Please read this carefully before upgrading.
+
+General changes and bug fixes:
+------------------------------
+* moved code to svn.php.net (fixes bug #16534) [izi]
+* removed endpoints code (hard to maintain) in favor of a xml definition file and generic methods (fixes #15472) [izi]
+* better validation of parameters [izi]
+* switch to JSON format as default (XML is still available) [izi]
+* switch to HTTP_Request2 (fixes bug #15072) [izi]
+* make the test suite runnable locally with mock HTTP responses (fixes bug #15084 #15085), coverage is now 100% [izi]
+* updated dependencies in package.xml (fixes bug #16522) [izi]
+* automagically convert all strings to unicode before sending them to twitter [izi]
+
+Search API changes:
+-------------------
++ added trends/current method [izi]
++ added trends/daily method [izi]
++ added trends/weekly method [izi]
+
+REST API changes:
+-----------------
+* statuses/friends_timeline: removed "since" parameter (no longer supported) and added "max_id" parameter [izi]
+* statuses/user_timeline: removed "since" parameter (no longer supported) and added "user_id" and "screen_name" parameters [izi]
++ added statuses/mentions method (fixes bug #16475) [izi]
+- removed statuses/replies (no longer supported) [izi]
+* statuses/friends: removed "since" parameter (no longer supported) and added "user_id" and "screen_name" parameters [izi]
+* statuses/followers: added "user_id" and "screen_name" parameters [izi]
+* direct_messages: removed "since" parameter (no longer supported) and added "max_id" and "count" parameters [izi]
+* direct_messages/sent: removed "since" parameter (no longer supported) and added "max_id" and "count" parameters [izi]
+* direct_messages/new: added "user_id" and "screen_name" parameters [izi]
+* friendships/create: added "user_id" and "screen_name" parameters [izi]
+* friendships/destroy: added "user_id" and "screen_name" parameters [izi]
+* users/show: removed "email" parameter, no longer supported by the API [izi]
++ added friendships/show method [izi]
++ added "Social Graph methods": friends/ids and followers/ids [izi]
+* notifications/follow: added "user_id" and "screen_name" parameters [izi]
+* notifications/leave: added "user_id" and "screen_name" parameters [izi]
++ added account/update_profile_colors [izi]
++ added account/update_delivery_device [izi]
++ added account/update_profile_image [izi]
++ added account/update_profile_background_image [izi]
++ added account/update_profile [izi]
++ added blocks/exists [izi]
++ added blocks/blocking [izi]
++ added saved_searches [izi]
++ added saved_searches/show [izi]
++ added saved_searches/create [izi]
++ added saved_searches/destroy [izi]
+- removed help/downtime_schedule (no longer supported) [izi]
+
+*** IMPORTANT: BACKWARD INCOMPATIBLE CHANGES ***
+
+- $twitter->search->query() has been replaced by $twitter->search() (you can also write $twitter->search->search())
+- the twitter API has changed, so some methods have been updated, removed or added (see above), you'll have probably to update your code
+- there are maybe some others incompatible changes, but it will be trivial to update your code
+
 ]]>
             </notes>
         </release>
