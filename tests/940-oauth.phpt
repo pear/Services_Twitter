@@ -1,5 +1,7 @@
 --TEST--
 oauth
+--SKIPIF--
+<?php if(!@include_once 'HTTP/OAuth.php') echo 'skip HTTP_OAuth is not installed'; ?>
 --FILE--
 <?php
 

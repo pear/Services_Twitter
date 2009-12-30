@@ -111,7 +111,7 @@ class Services_Twitter
      *
      * @var string $uri
      */
-    public static $uri = 'http://twitter.com';
+    public static $uri = 'http://api.twitter.com/1';
 
     /**
      * Public URI of Twitter's Search API
@@ -789,7 +789,7 @@ class Services_Twitter
             }
             break;
         case 'id_or_screenname':
-            if (!preg_match('/^[a-z0-9_]+$/', $val)) {
+            if (!preg_match('/^[a-zA-Z0-9_\.]{1,16}$/', $val)) {
                 $msg = $name . ' must be a valid id or screen name';
             }
             break;

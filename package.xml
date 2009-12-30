@@ -30,10 +30,10 @@
         <email>hostmaster@shupp.org</email>
         <active>yes</active>
     </lead>
-    <date>2009-09-14</date>
+    <date>2009-12-30</date>
     <version>
-        <release>0.4.0</release>
-        <api>0.4.0</api>
+        <release>0.5.0</release>
+        <api>0.5.0</api>
     </version>
     <stability>
         <release>beta</release>
@@ -42,16 +42,29 @@
     <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
     <notes>
 <![CDATA[
-New Features:
--------------
-* OAuth support [shupp]
-* SSL support [izi]
+REST API changes:
+-----------------
++ added statuses/home_timeline method,
++ added statuses/retweeted_by_me method,
++ added statuses/retweeted_to_me method,
++ added statuses/retweets_of_me method,
++ added statuses/retweet method,
++ added statuses/retweets method,
++ added report_spam method,
+* changed old API url (http://twitter.com) to http://api.twitter.com/1,
+* replaced page by cursor attribute in statuses/friends, statuses/followers, friends/ids and followers/ids,
+* set auth required to false in account/rate_limit_status,
+- removed email parameter in account/update_profile method,
 
-Fixes/improvements:
+Search API changes:
 -------------------
-* Fixed a bug in UTF8 detection [izi]
-* Fixed some unit tests [izi]
-* make use of setOption/getOption internally instead of manipulating the options array directly [izi]
++ added locale parameter to search method.
+
+Other changes:
+--------------
+* fixed screenname regex,
+* fixed and improved some tests.
+
 ]]>
     </notes>
     <contents>
@@ -373,6 +386,32 @@ REST API changes:
 - the twitter API has changed, so some methods have been updated, removed or added (see above), you'll have probably to update your code
 - there are maybe some others incompatible changes, but it will be trivial to update your code
 
+]]>
+            </notes>
+        </release>
+        <release>
+            <date>2009-09-14</date>
+            <version>
+                <release>0.4.0</release>
+                <api>0.4.0</api>
+            </version>
+            <stability>
+                <release>beta</release>
+                <api>beta</api>
+            </stability>
+            <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
+            <notes>
+<![CDATA[
+New Features:
+-------------
+* OAuth support [shupp]
+* SSL support [izi]
+
+Fixes/improvements:
+-------------------
+* Fixed a bug in UTF8 detection [izi]
+* Fixed some unit tests [izi]
+* make use of setOption/getOption internally instead of manipulating the options array directly [izi]
 ]]>
             </notes>
         </release>

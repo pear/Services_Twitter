@@ -24,17 +24,7 @@ $twitter = new MyTwitter('foo', 'bar', array('fooBar' => 'hey!'));
 $twitter->setOption('fooBar', 'ho, let\'s go!');
 
 
-require_once 'HTTP/Request2/Response.php';
-require_once 'HTTP/Request2/Adapter/Mock.php';
 $twitter = new Services_Twitter();
-$resp = new HTTP_Request2_Response('HTTP/1.1 200 Success', false);
-$resp->appendBody("Foo");
-$mock = new HTTP_Request2_Adapter_Mock();
-$mock->addResponse($resp);
-$request = new HTTP_Request2();
-$request->setAdapter($mock);
-$twitter->setRequest($request);
-echo $twitter->statuses->public_timeline() . "\n";
 
 require_once dirname(__FILE__) . '/setup.php';
 $twitter = Services_Twitter_factory('options', true, array(
@@ -62,7 +52,6 @@ array(5) {
 }
 FooBar says: hey!
 FooBar says: ho, let's go!
-Foo
 <?xml version="1.0" encoding="UTF-8"?>
 <status>
   %s

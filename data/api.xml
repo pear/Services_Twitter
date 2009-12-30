@@ -23,6 +23,13 @@ http://pear.php.net/packages/Services_Twitter
         <endpoint name="public_timeline" method="GET" auth_required="false">
             <formats>xml,json,rss,atom</formats>
         </endpoint>
+        <endpoint name="home_timeline" method="GET" auth_required="true">
+            <formats>xml,json,rss,atom</formats>
+            <param name="since_id" type="integer" required="false"/>
+            <param name="max_id" type="integer" required="false"/>
+            <param name="count" type="integer" max_length="200" required="false"/>
+            <param name="page" type="integer" required="false"/>
+        </endpoint>
         <endpoint name="friends_timeline" method="GET" auth_required="true">
             <formats>xml,json,rss,atom</formats>
             <param name="since_id" type="integer" required="false"/>
@@ -47,6 +54,27 @@ http://pear.php.net/packages/Services_Twitter
             <param name="count" type="integer" max_length="200" required="false"/>
             <param name="page" type="integer" required="false"/>
         </endpoint>
+        <endpoint name="retweeted_by_me" method="GET" auth_required="true">
+            <formats>xml,json,rss,atom</formats>
+            <param name="since_id" type="integer" required="false"/>
+            <param name="max_id" type="integer" required="false"/>
+            <param name="count" type="integer" max_length="200" required="false"/>
+            <param name="page" type="integer" required="false"/>
+        </endpoint>
+        <endpoint name="retweeted_to_me" method="GET" auth_required="true">
+            <formats>xml,json,rss,atom</formats>
+            <param name="since_id" type="integer" required="false"/>
+            <param name="max_id" type="integer" required="false"/>
+            <param name="count" type="integer" max_length="200" required="false"/>
+            <param name="page" type="integer" required="false"/>
+        </endpoint>
+        <endpoint name="retweets_of_me" method="GET" auth_required="true">
+            <formats>xml,json,rss,atom</formats>
+            <param name="since_id" type="integer" required="false"/>
+            <param name="max_id" type="integer" required="false"/>
+            <param name="count" type="integer" max_length="200" required="false"/>
+            <param name="page" type="integer" required="false"/>
+        </endpoint>
         <endpoint name="show" method="GET" auth_required="true">
             <formats>xml,json</formats>
             <param name="id" type="integer" required="true"/>
@@ -60,6 +88,15 @@ http://pear.php.net/packages/Services_Twitter
             <formats>xml,json</formats>
             <param name="id" type="integer" required="true"/>
         </endpoint>
+        <endpoint name="retweet" method="POST" auth_required="true">
+            <formats>xml,json</formats>
+            <param name="id" type="integer" required="true"/>
+        </endpoint>
+        <endpoint name="retweets" method="GET" auth_required="true">
+            <formats>xml,json</formats>
+            <param name="id" type="integer" required="true"/>
+            <param name="count" type="integer" max_length="100" required="false"/>
+        </endpoint>
         <!-- 
         FIXME API inconsistency: the two endpoints below belong to user methods
         in the API documentation, but their path is set to "statuses", so we
@@ -70,16 +107,18 @@ http://pear.php.net/packages/Services_Twitter
             <param name="id" type="id_or_screenname" required="false"/>
             <param name="user_id" type="id_or_screenname" required="false"/>
             <param name="screen_name" type="id_or_screenname" required="false"/>
-            <param name="page" type="integer" required="false"/>
+            <param name="cursor" type="integer" required="false"/>
         </endpoint>
         <endpoint name="followers" method="GET" auth_required="true">
             <formats>xml,json</formats>
             <param name="id" type="id_or_screenname" required="false"/>
             <param name="user_id" type="id_or_screenname" required="false"/>
             <param name="screen_name" type="id_or_screenname" required="false"/>
-            <param name="page" type="integer" required="false"/>
+            <param name="cursor" type="integer" required="false"/>
         </endpoint>
     </category>
+    
+    <!-- TODO add list, list members and list subscribers methods -->
 
     <!-- User methods -->
     <category name="users">
@@ -154,17 +193,16 @@ http://pear.php.net/packages/Services_Twitter
             <param name="id" type="id_or_screenname" required="false"/>
             <param name="user_id" type="id_or_screenname" required="false"/>
             <param name="screen_name" type="id_or_screenname" required="false"/>
-            <param name="page" type="integer" required="false"/>
+            <param name="cursor" type="integer" required="false"/>
         </endpoint>
     </category>
-
     <category name="followers">
         <endpoint name="ids" method="GET" auth_required="false" min_args="1">
             <formats>xml,json</formats>
             <param name="id" type="id_or_screenname" required="false"/>
             <param name="user_id" type="id_or_screenname" required="false"/>
             <param name="screen_name" type="id_or_screenname" required="false"/>
-            <param name="page" type="integer" required="false"/>
+            <param name="cursor" type="integer" required="false"/>
         </endpoint>
     </category>
 
@@ -173,7 +211,7 @@ http://pear.php.net/packages/Services_Twitter
         <endpoint name="verify_credentials" method="GET" auth_required="true">
             <formats>xml,json</formats>
         </endpoint>
-        <endpoint name="rate_limit_status" method="GET" auth_required="true">
+        <endpoint name="rate_limit_status" method="GET" auth_required="false">
             <formats>xml,json</formats>
         </endpoint>
         <endpoint name="end_session" method="POST" auth_required="true">
@@ -203,7 +241,6 @@ http://pear.php.net/packages/Services_Twitter
         <endpoint name="update_profile" method="POST" auth_required="true" min_args="1">
             <formats>xml,json</formats>
             <param name="name" type="string" max_length="40" required="false"/>
-            <param name="email" type="string" max_length="40" required="false"/>
             <param name="url" type="string" max_length="100" required="false"/>
             <param name="location" type="string" max_length="30" required="false"/>
             <param name="description" type="string" max_length="160" required="false"/>
@@ -265,6 +302,16 @@ http://pear.php.net/packages/Services_Twitter
         <!-- TODO add blocks/blocking/ids but this is not currently possible -->
     </category>
 
+    <!-- Report spam methods -->
+    <category name="report_spam">
+        <endpoint name="report_spam" method="POST" auth_required="true" min_args="1">
+            <formats>xml,json</formats>
+            <param name="id" type="id_or_screenname" required="false"/>
+            <param name="user_id" type="id_or_screenname" required="false"/>
+            <param name="screen_name" type="id_or_screenname" required="false"/>
+        </endpoint>
+    </category>
+
     <!-- Saved searches methods -->
     <category name="saved_searches">
         <endpoint name="saved_searches" method="GET" auth_required="true">
@@ -300,6 +347,7 @@ http://pear.php.net/packages/Services_Twitter
             <param name="q" type="string" required="true"/>
             <param name="rpp" type="integer" required="false"/>
             <param name="lang" type="iso-639-1" required="false"/>
+            <param name="locale" type="string" required="false"/>
             <param name="page" type="integer" required="false"/>
             <param name="since_id" type="integer" required="false"/>
             <param name="geocode" type="geocode" required="false"/>
