@@ -69,6 +69,7 @@ require_once 'Services/Twitter/Exception.php';
  * }
  *
  * </code>
+ *
  * @category Services
  * @package  Services_Twitter
  * @author   Joe Stump <joe@joestump.net> 
@@ -309,8 +310,8 @@ class Services_Twitter
         $this->currentCategory = null;
 
         // prepare the request
-        list($uri, $method, $params, $files) = 
-            $this->prepareRequest($ep, $args, $cat);
+        list($uri, $method, $params, $files)
+            = $this->prepareRequest($ep, $args, $cat);
 
         // we can now send our request
         if ($this->oauth instanceof HTTP_OAuth_Consumer) {
@@ -350,8 +351,8 @@ class Services_Twitter
      * 
      * @param string $uri    The full URI of the endpoint
      * @param string $method GET or POST
-     * @param array $params  Array of additional parameter
-     * @param array $files   Array of files to upload
+     * @param array  $params Array of additional parameter
+     * @param array  $files  Array of files to upload
      * 
      * @throws Services_Twitter_Exception on failure
      * @return HTTP_Request2_Response
@@ -592,8 +593,11 @@ class Services_Twitter
 
         // check if we have is a search or trends call, in this case the base 
         // uri is different
-        if ($cat == 'search' || (string)$endpoint['name'] == 'search' ||
-            $cat == 'trends' || (string)$endpoint['name'] == 'trends') {
+        if (   $cat == 'search' 
+            || (string)$endpoint['name'] == 'search'
+            || $cat == 'trends' 
+            || (string)$endpoint['name'] == 'trends'
+        ) {
             $uri = self::$searchUri;
         } else {
             $uri = self::$uri;
@@ -629,8 +633,10 @@ class Services_Twitter
                 $path
             );
         }
-        if ($minargs && (!isset($args[0]) || 
-            is_array($args[0]) && $minargs > count($args[0]))) {
+        if (   $minargs && (!isset($args[0]) 
+            || is_array($args[0]) 
+            && $minargs > count($args[0]))
+        ) {
             throw new Services_Twitter_Exception(
                 'Not enough arguments for ' . $path,
                 self::ERROR_PARAMS,
@@ -699,8 +705,8 @@ class Services_Twitter
      * @return object Instance of SimpleXMLElement 
      */
     protected function sendRequest($uri, $method = 'GET', array $args = array(),
-        array $files = array())
-    {
+        array $files = array()
+    ) {
         try {
             $request = clone $this->getRequest();
             $request->setMethod($method);
@@ -839,16 +845,19 @@ class Services_Twitter
      */
     protected function isUtf8($str)
     {
-        return (bool)preg_match('%^(?:
-              [\x09\x0A\x0D\x20-\x7E]            # ASCII
-            | [\xC2-\xDF][\x80-\xBF]             # non-overlong 2-byte
-            |  \xE0[\xA0-\xBF][\x80-\xBF]        # excluding overlongs
-            | [\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}  # straight 3-byte
-            |  \xED[\x80-\x9F][\x80-\xBF]        # excluding surrogates
-            |  \xF0[\x90-\xBF][\x80-\xBF]{2}     # planes 1-3
-            | [\xF1-\xF3][\x80-\xBF]{3}          # planes 4-15
-            |  \xF4[\x80-\x8F][\x80-\xBF]{2}     # plane 16
-        )*$%xs', $str);
+        return (bool)preg_match(
+            '%^(?:
+                  [\x09\x0A\x0D\x20-\x7E]            # ASCII
+                | [\xC2-\xDF][\x80-\xBF]             # non-overlong 2-byte
+                |  \xE0[\xA0-\xBF][\x80-\xBF]        # excluding overlongs
+                | [\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}  # straight 3-byte
+                |  \xED[\x80-\x9F][\x80-\xBF]        # excluding surrogates
+                |  \xF0[\x90-\xBF][\x80-\xBF]{2}     # planes 1-3
+                | [\xF1-\xF3][\x80-\xBF]{3}          # planes 4-15
+                |  \xF4[\x80-\x8F][\x80-\xBF]{2}     # plane 16
+            )*$%xs',
+            $str
+        );
     }
 
     // }}}

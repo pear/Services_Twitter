@@ -61,7 +61,10 @@ function Services_Twitter_factory($ep, $auth = true, $options = array())
     if (!$config['live_test']) {
         if ($ep == 'exception1') {
             $resp = new HTTP_Request2_Response('HTTP/1.1 401 Unauthorized', false);
-            $resp->appendBody('{"request":"\/statuses\/friends_timeline.json","error":"Could not authenticate you."}');
+            $resp->appendBody(
+                '{"request":"\/statuses\/friends_timeline.json", '
+                . '"error":"Could not authenticate you."}'
+            );
         } else if ($ep == 'exception2') {
             $resp = new HTTP_Request2_Response('HTTP/1.1 404 Not Found', false);
         } else {
