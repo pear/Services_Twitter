@@ -124,7 +124,9 @@ http://pear.php.net/packages/Services_Twitter
     <category name="users">
         <endpoint name="show" method="GET" auth_required="true" min_args="1">
             <formats>xml,json</formats>
-            <param name="id" type="id_or_screenname" required="true"/>
+            <param name="id" type="id_or_screenname" required="false"/>
+            <param name="user_id" type="id_or_screenname" required="false"/>
+            <param name="screen_name" type="id_or_screenname" required="false"/>
         </endpoint>
     </category>
 
