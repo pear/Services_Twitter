@@ -69,7 +69,7 @@ class Services_Twitter_AllTests
 }
 
 if (PHPUnit_MAIN_METHOD == 'Services_Twitter_AllTests::main') {
-    Services_GeoNames_AllTests::main();
+    Services_Twitter_AllTests::main();
 }
 
 ?>
