@@ -756,7 +756,7 @@ class Services_Twitter
     protected function validateArg($name, &$val, $type, $maxLength = null)
     {
         // check length if necessary
-        if ($maxLength !== null && strlen($val) > $maxLength) {
+        if ($maxLength !== null && mb_strlen($val, 'UTF-8') > $maxLength) {
             throw new Exception(
                 $name . ' must not exceed ' . $maxLength . ' chars',
                 self::ERROR_PARAMS

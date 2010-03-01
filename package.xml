@@ -16,7 +16,7 @@
         <name>Joe Stump</name>
         <user>jstump</user>
         <email>joe@joestump.net</email>
-        <active>yes</active>
+        <active>no</active>
     </lead>
     <lead>
         <name>David Jean Louis</name>
@@ -30,10 +30,10 @@
         <email>hostmaster@shupp.org</email>
         <active>yes</active>
     </lead>
-    <date>2010-01-06</date>
+    <date>2010-02-28</date>
     <version>
-        <release>0.5.0</release>
-        <api>0.5.0</api>
+        <release>0.5.1</release>
+        <api>0.5.1</api>
     </version>
     <stability>
         <release>beta</release>
@@ -42,29 +42,8 @@
     <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
     <notes>
 <![CDATA[
-REST API changes:
------------------
-+ added statuses/home_timeline method,
-+ added statuses/retweeted_by_me method,
-+ added statuses/retweeted_to_me method,
-+ added statuses/retweets_of_me method,
-+ added statuses/retweet method,
-+ added statuses/retweets method,
-+ added report_spam method,
-* changed old API url (http://twitter.com) to http://api.twitter.com/1,
-* replaced page by cursor attribute in statuses/friends, statuses/followers, friends/ids and followers/ids,
-* set auth required to false in account/rate_limit_status,
-- removed email parameter in account/update_profile method,
-
-Search API changes:
--------------------
-+ added locale parameter to search method.
-
-Other changes:
---------------
-* fixed screenname regex,
-* fixed and improved some tests.
-
+* Fixed bug #17075.  Wrong test in package
+* Added mb_string requirement after reported issues
 ]]>
     </notes>
     <contents>
@@ -207,6 +186,9 @@ Other changes:
             </package>
             <extension>
                 <name>json</name>
+            </extension>
+            <extension>
+                <name>mbstring</name>
             </extension>
         </required>
         <optional>
@@ -412,6 +394,44 @@ Fixes/improvements:
 * Fixed a bug in UTF8 detection [izi]
 * Fixed some unit tests [izi]
 * make use of setOption/getOption internally instead of manipulating the options array directly [izi]
+]]>
+            </notes>
+        </release>
+        <release>
+            <version>
+                <release>0.5.0</release>
+                <api>0.5.0</api>
+            </version>
+            <stability>
+                <release>beta</release>
+                <api>beta</api>
+            </stability>
+            <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
+            <notes>
+<![CDATA[
+REST API changes:
+-----------------
++ added statuses/home_timeline method,
++ added statuses/retweeted_by_me method,
++ added statuses/retweeted_to_me method,
++ added statuses/retweets_of_me method,
++ added statuses/retweet method,
++ added statuses/retweets method,
++ added report_spam method,
+* changed old API url (http://twitter.com) to http://api.twitter.com/1,
+* replaced page by cursor attribute in statuses/friends, statuses/followers, friends/ids and followers/ids,
+* set auth required to false in account/rate_limit_status,
+- removed email parameter in account/update_profile method,
+
+Search API changes:
+-------------------
++ added locale parameter to search method.
+
+Other changes:
+--------------
+* fixed screenname regex,
+* fixed and improved some tests.
+
 ]]>
             </notes>
         </release>
