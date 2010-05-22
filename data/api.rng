@@ -63,6 +63,8 @@
                                         <value>device</value>
                                         <value>iso-639-1</value>
                                         <value>geocode</value>
+                                        <value>lat</value>
+                                        <value>long</value>
                                         <value>image</value>
                                         <value>color</value>
                                     </choice>

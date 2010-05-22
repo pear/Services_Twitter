@@ -7,7 +7,10 @@ require_once dirname(__FILE__) . '/setup.php';
 
 try {
     $twitter = Services_Twitter_factory('statuses/update');
-    $status  = $twitter->statuses->update('testing services_twitter');
+    $status  = $twitter->statuses->update('testing services_twitter ' . microtime(), array(
+        'lat'  => 20.0,
+        'long' => 20.0
+    ));
     var_dump($status instanceof stdclass && isset($status->id));
     $twitter = Services_Twitter_factory('statuses/destroy');
     $deleted = $twitter->statuses->destroy($status->id);

@@ -30,10 +30,10 @@
         <email>hostmaster@shupp.org</email>
         <active>yes</active>
     </lead>
-    <date>2010-02-28</date>
+    <date>2010-05-22</date>
     <version>
-        <release>0.5.1</release>
-        <api>0.5.1</api>
+        <release>0.5.2</release>
+        <api>0.5.2</api>
     </version>
     <stability>
         <release>beta</release>
@@ -42,8 +42,8 @@
     <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
     <notes>
 <![CDATA[
-* Fixed bug #17075.  Wrong test in package
-* Added mb_string requirement after reported issues
+* Updated statuses/update method : added lat, long, place_id and display_coordinates parameters (closes feature request #17421),
+* Fixed package.xml.
 ]]>
     </notes>
     <contents>
@@ -398,6 +398,7 @@ Fixes/improvements:
             </notes>
         </release>
         <release>
+            <date>2010-01-06</date>
             <version>
                 <release>0.5.0</release>
                 <api>0.5.0</api>
@@ -432,6 +433,24 @@ Other changes:
 * fixed screenname regex,
 * fixed and improved some tests.
 
+]]>
+            </notes>
+        </release>
+        <release>
+            <date>2010-02-28</date>
+            <version>
+                <release>0.5.1</release>
+                <api>0.5.1</api>
+            </version>
+            <stability>
+                <release>beta</release>
+                <api>beta</api>
+            </stability>
+            <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
+            <notes>
+<![CDATA[
+* Fixed bug #17075.  Wrong test in package
+* Added mb_string requirement after reported issues
 ]]>
             </notes>
         </release>

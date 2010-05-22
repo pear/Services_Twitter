@@ -816,6 +816,20 @@ class Services_Twitter
                 $msg = $name . ' must be "latitide,longitude,radius(km or mi)"';
             }
             break;
+        case 'lat':
+        case 'long':
+            if (!is_numeric($val)) {
+                $msg = $name . ' must be a float';
+            } else {
+                $val = floatval($val);
+                if ($type == 'lat' && ($val < -90 || $val > 90)) {
+                    $msg = 'valid range for ' . $name . ' is -90.0 to +90.0';
+                }
+                if ($type == 'long' && ($val < -180 || $val > 180)) {
+                    $msg = 'valid range for ' . $name . ' is -180.0 to +180.0';
+                }
+            }
+            break;
         case 'color':
             if (!preg_match('/^([0-9a-f]{1,2}){3}$/i', $val)) {
                 $msg = $name . ' must be an hexadecimal color code (eg. fff)';

@@ -83,6 +83,10 @@ http://pear.php.net/packages/Services_Twitter
             <formats>xml,json</formats>
             <param name="status" type="string" max_length="140" required="true"/>
             <param name="in_reply_to_status_id" type="integer" required="false"/>
+            <param name="lat" type="lat" required="false"/>
+            <param name="long" type="long" required="false"/>
+            <param name="place_id" type="string" required="false"/>
+            <param name="display_coordinates" type="boolean" required="false"/>
         </endpoint>
         <endpoint name="destroy" method="POST" auth_required="true">
             <formats>xml,json</formats>
