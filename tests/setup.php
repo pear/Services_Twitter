@@ -35,6 +35,9 @@ if (false === @include_once $cfgfile) {
         'friend'    => 'test_friend',
         'status_id' => 100000,
         'live_test' => false,
+        'list_name' => 'test-list',
+        'list_slug' => 'test-list',
+        'list_user' => 100000,
     );
 }
 
