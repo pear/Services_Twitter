@@ -121,8 +121,113 @@ http://pear.php.net/packages/Services_Twitter
             <param name="cursor" type="integer" required="false"/>
         </endpoint>
     </category>
-    
-    <!-- TODO add list, list members and list subscribers methods -->
+
+    <!-- List API methods -->
+    <category name="lists">
+        <endpoint name="create" method="POST" auth_required="true" min_args="2" routing="/:user/lists">
+            <formats>xml,json</formats>
+            <param name="user" type="id_or_screenname" required="true"/>
+            <param name="name" type="string" required="true"/>
+            <param name="mode" type="mode" required="false"/>
+            <param name="description" type="string" max_length="100" required="false"/>
+        </endpoint>
+        <endpoint name="update" method="POST" auth_required="true" min_args="2" routing="/:user/lists/:id">
+            <formats>xml,json</formats>
+            <param name="user" type="id_or_screenname" required="true"/>
+            <param name="id" type="listid_or_slug" required="true"/>
+            <param name="name" type="string" required="false"/>
+            <param name="mode" type="mode" required="false"/>
+            <param name="description" type="string" max_length="100" required="false"/>
+        </endpoint>
+        <endpoint name="list" method="GET" auth_required="true" min_args="1" routing="/:user/lists">
+            <formats>xml,json</formats>
+            <param name="user" type="id_or_screenname" required="true"/>
+            <param name="cursor" type="integer" required="false"/>
+        </endpoint>
+        <endpoint name="show" method="GET" auth_required="true" min_args="2" routing="/:user/lists/:id">
+            <formats>xml,json</formats>
+            <param name="user" type="id_or_screenname" required="true"/>
+            <param name="id" type="listid_or_slug" required="true"/>
+        </endpoint>
+        <endpoint name="delete" method="DELETE" auth_required="true" min_args="2" routing="/:user/lists/:id">
+            <formats>xml,json</formats>
+            <param name="user" type="id_or_screenname" required="true"/>
+            <param name="id" type="listid_or_slug" required="true"/>
+        </endpoint>
+        <endpoint name="statuses" method="GET" auth_required="false" min_args="1" routing="/:user/lists/:list_id/statuses">
+            <formats>xml,json,atom</formats>
+            <param name="user" type="id_or_screenname" required="true"/>
+            <param name="list_id" type="listid_or_slug" required="true"/>
+            <param name="since_id" type="integer" required="false"/>
+            <param name="max_id" type="integer" required="false"/>
+            <param name="per_page" type="integer" required="false"/>
+            <param name="page" type="integer" required="false"/>
+        </endpoint>
+        <endpoint name="memberships" method="GET" auth_required="true" min_args="1" routing="/:user/lists/memberships">
+            <formats>xml,json</formats>
+            <param name="user" type="id_or_screenname" required="true"/>
+            <param name="cursor" type="integer" required="false"/>
+        </endpoint>
+        <endpoint name="subscriptions" method="GET" auth_required="true" min_args="1" routing="/:user/lists/subscriptions">
+            <formats>xml,json</formats>
+            <param name="user" type="id_or_screenname" required="true"/>
+            <param name="cursor" type="integer" required="false"/>
+        </endpoint>
+    </category>
+
+    <!-- List members API methods -->
+    <category name="list_members">
+        <endpoint name="list" method="GET" auth_required="true" min_args="2" routing="/:user/:list_id/members">
+            <formats>xml,json</formats>
+            <param name="user" type="id_or_screenname" required="true"/>
+            <param name="list_id" type="listid_or_slug" required="true"/>
+            <param name="cursor" type="integer" required="false"/>
+        </endpoint>
+        <endpoint name="create" method="POST" auth_required="true" min_args="3" routing="/:user/:list_id/members">
+            <formats>xml,json</formats>
+            <param name="user" type="id_or_screenname" required="true"/>
+            <param name="list_id" type="listid_or_slug" required="true"/>
+            <param name="id" type="integer" required="true"/>
+        </endpoint>
+        <endpoint name="delete" method="DELETE" auth_required="true" min_args="3" routing="/:user/:list_id/members">
+            <formats>xml,json</formats>
+            <param name="user" type="id_or_screenname" required="true"/>
+            <param name="list_id" type="listid_or_slug" required="true"/>
+            <param name="id" type="integer" required="true"/>
+        </endpoint>
+        <endpoint name="show" method="GET" auth_required="true" min_args="3" routing="/:user/:list_id/members/:id">
+            <formats>xml,json</formats>
+            <param name="user" type="id_or_screenname" required="true"/>
+            <param name="list_id" type="listid_or_slug" required="true"/>
+            <param name="id" type="integer" required="true"/>
+        </endpoint>
+    </category>
+
+    <!-- List subscribers API methods -->
+    <category name="list_subscribers">
+        <endpoint name="list" method="GET" auth_required="true" min_args="2" routing="/:user/:list_id/subscribers">
+            <formats>xml,json</formats>
+            <param name="user" type="id_or_screenname" required="true"/>
+            <param name="list_id" type="listid_or_slug" required="true"/>
+            <param name="cursor" type="integer" required="false"/>
+        </endpoint>
+        <endpoint name="create" method="POST" auth_required="true" min_args="2" routing="/:user/:list_id/subscribers">
+            <formats>xml,json</formats>
+            <param name="user" type="id_or_screenname" required="true"/>
+            <param name="list_id" type="listid_or_slug" required="true"/>
+        </endpoint>
+        <endpoint name="delete" method="DELETE" auth_required="true" min_args="2" routing="/:user/:list_id/subscribers">
+            <formats>xml,json</formats>
+            <param name="user" type="id_or_screenname" required="true"/>
+            <param name="list_id" type="listid_or_slug" required="true"/>
+        </endpoint>
+        <endpoint name="show" method="GET" auth_required="true" min_args="3" routing="/:user/:list_id/subscribers/:id">
+            <formats>xml,json</formats>
+            <param name="user" type="id_or_screenname" required="true"/>
+            <param name="list_id" type="listid_or_slug" required="true"/>
+            <param name="id" type="integer" required="true"/>
+        </endpoint>
+    </category>
 
     <!-- User methods -->
     <category name="users">
@@ -131,6 +236,12 @@ http://pear.php.net/packages/Services_Twitter
             <param name="id" type="id_or_screenname" required="false"/>
             <param name="user_id" type="id_or_screenname" required="false"/>
             <param name="screen_name" type="id_or_screenname" required="false"/>
+        </endpoint>
+        <endpoint name="search" method="GET" auth_required="false">
+            <formats>xml,json</formats>
+            <param name="q" type="string" required="true"/>
+            <param name="per_page" type="integer" required="false"/>
+            <param name="page" type="integer" required="false"/>
         </endpoint>
     </category>
 
@@ -377,6 +488,15 @@ http://pear.php.net/packages/Services_Twitter
             <formats>json</formats>
             <param name="date" type="date" required="false"/>
             <param name="exclude" type="string" required="false"/>
+        </endpoint>
+        <endpoint name="available" method="GET" auth_required="false">
+            <formats>xml,json</formats>
+            <param name="lat" type="string" required="false"/>
+            <param name="long" type="string" required="false"/>
+        </endpoint>
+        <endpoint name="location" method="GET" auth_required="false" min_args="1" routing="/trends/:woeid">
+            <formats>xml,json</formats>
+            <param name="woeid" type="integer" required="true"/>
         </endpoint>
     </category>
 

@@ -594,9 +594,8 @@ class Services_Twitter
         // check if we have is a search or trends call, in this case the base 
         // uri is different
         if (   $cat == 'search' 
-            || (string)$endpoint['name'] == 'search'
-            || $cat == 'trends' 
-            || (string)$endpoint['name'] == 'trends'
+            || ( $cat == 'trends'
+            && !in_array((string)$endpoint['name'], array('available', 'location')))
         ) {
             $uri = self::$searchUri;
         } else {
@@ -613,8 +612,8 @@ class Services_Twitter
         if ($cat !== null) {
             $path .= $cat . '/';
         }
-        $method = (string)$endpoint['method'];
         $path  .= (string)$endpoint['name'];
+        $method = (string)$endpoint['method'];
 
         // check if we have a POST method and a registered source to pass
         $source = $this->getOption('source');
@@ -645,6 +644,10 @@ class Services_Twitter
         }
         $needargs = $minargs;
 
+        $routing = array();
+        if (isset($endpoint['routing'])) {
+            $routing = explode('/', (string)$endpoint['routing']);
+        }
         // now process arguments according to their definition in the xml 
         // mapping
         foreach ($endpoint->param as $param) {
@@ -671,21 +674,26 @@ class Services_Twitter
                     $path
                 );
             }
-            if ($pName == 'id') {
-                $path .= '/' . $arg;
+            if (in_array(':' . $pName, $routing)) {
+                $routing[array_search(':' . $pName, $routing)] = rawurlencode($arg);
             } else {
-                if ($pType == 'string' && !$this->isUtf8($arg)) {
-                    // iso-8859-1 string that we must convert to unicode
-                    $arg = utf8_encode($arg);
-                }
-                if ($pType == 'image') {
-                    // we have a file upload
-                    $files[$pName] = $arg;
+                if ($pName == 'id') {
+                    $path .= '/' . $arg;
                 } else {
-                    $params[$pName] = $arg;
+                    if ($pType == 'string' && !$this->isUtf8($arg)) {
+                        // iso-8859-1 string that we must convert to unicode
+                        $arg = utf8_encode($arg);
+                    }
+                    if ($pType == 'image') {
+                        // we have a file upload
+                        $files[$pName] = $arg;
+                    } else {
+                        $params[$pName] = $arg;
+                    }
                 }
             }
         }
+        $path = count($routing) ? implode('/', $routing) : $path;
         $uri .= $path . '.' . $this->getOption('format');
         return array($uri, $method, $params, $files);
     }
@@ -840,6 +848,18 @@ class Services_Twitter
                 $msg = $name . ' must be a valid image path';
             }
             // XXX we don't check the image type for now...
+            break;
+        case 'listid_or_slug':
+            if (!preg_match('/^[0-9a-z]+(?:-?[0-9a-z]+)*$/', $val)) {
+                $msg = $name . ' must be a valid list id or slug';
+            }
+            break;
+        case 'mode':
+            $modes = array('public', 'private');
+            if (!in_array($val, $modes)) {
+                $msg = $name . ' must be one of the following: '
+                     . implode(', ', $modes);
+            }
             break;
         }
         if ($msg !== null) {

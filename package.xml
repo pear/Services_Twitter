@@ -1,236 +1,275 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package packagerversion="1.4.2" 
-         version="2.0" 
-         xmlns="http://pear.php.net/dtd/package-2.0" 
-         xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-         xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
-                             http://pear.php.net/dtd/tasks-1.0.xsd
-                             http://pear.php.net/dtd/package-2.0
-                             http://pear.php.net/dtd/package-2.0.xsd">
-    <name>Services_Twitter</name>
+<package packagerversion="1.9.0" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+    http://pear.php.net/dtd/tasks-1.0.xsd
+    http://pear.php.net/dtd/package-2.0
+    http://pear.php.net/dtd/package-2.0.xsd">
+ <name>Services_Twitter</name>
+ <channel>pear.php.net</channel>
+ <summary>PHP interface to Twitter&apos;s API</summary>
+ <description>An interface for communicating with Twitter&apos;s public API. Send status updates, fetch information, add friends, etc.</description>
+ <lead>
+  <name>Bill Shupp</name>
+  <user>shupp</user>
+  <email>shupp@php.net</email>
+  <active>yes</active>
+ </lead>
+ <lead>
+  <name>David Jean Louis</name>
+  <user>izi</user>
+  <email>izi@php.net</email>
+  <active>yes</active>
+ </lead>
+ <lead>
+  <name>Joe Stump</name>
+  <user>jstump</user>
+  <email>joe@joestump.net</email>
+  <active>yes</active>
+ </lead>
+ <date>2010-06-01</date>
+ <time>12:57:12</time>
+ <version>
+  <release>0.6.0</release>
+  <api>0.6.0</api>
+ </version>
+ <stability>
+  <release>beta</release>
+  <api>beta</api>
+ </stability>
+ <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
+ <notes>
+* Updated statuses/update method : added lat, long, place_id and display_coordinates parameters (closes feature request #17421)
+* Added lists and trends support from http://blog.cheki.net/archives/1618
+* Added generatePackage.php for easy package.xml management
+ </notes>
+ <contents>
+  <dir baseinstalldir="/" name="/">
+   <dir name="data">
+    <file name="api.rng" role="data" />
+    <file name="api.xml" role="data" />
+   </dir> <!-- /data -->
+   <dir name="Services">
+    <dir name="Twitter">
+     <file name="Exception.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+    </dir> <!-- /Services/Twitter -->
+    <file name="Twitter.php" role="php">
+     <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
+     <tasks:replace from="@package_version@" to="version" type="package-info" />
+    </file>
+   </dir> <!-- /Services -->
+   <dir name="tests">
+    <dir name="data">
+     <dir name="account">
+      <file name="end_session.dat" role="test" />
+      <file name="rate_limit_status.dat" role="test" />
+      <file name="update_delivery_device.dat" role="test" />
+      <file name="update_location.dat" role="test" />
+      <file name="update_profile.dat" role="test" />
+      <file name="update_profile_background_image.dat" role="test" />
+      <file name="update_profile_colors.dat" role="test" />
+      <file name="update_profile_image.dat" role="test" />
+      <file name="verify_credentials.dat" role="test" />
+     </dir> <!-- /tests/data/account -->
+     <dir name="blocks">
+      <file name="create_destroy.dat" role="test" />
+     </dir> <!-- /tests/data/blocks -->
+     <dir name="direct_messages">
+      <file name="destroy_new.dat" role="test" />
+      <file name="direct_messages.dat" role="test" />
+      <file name="sent.dat" role="test" />
+     </dir> <!-- /tests/data/direct_messages -->
+     <dir name="favorites">
+      <file name="create.dat" role="test" />
+      <file name="destroy.dat" role="test" />
+      <file name="favorites.dat" role="test" />
+     </dir> <!-- /tests/data/favorites -->
+     <dir name="friendships">
+      <file name="create_destroy.dat" role="test" />
+      <file name="exists1.dat" role="test" />
+      <file name="exists2.dat" role="test" />
+      <file name="exists3.dat" role="test" />
+      <file name="exists4.dat" role="test" />
+     </dir> <!-- /tests/data/friendships -->
+     <dir name="help">
+      <file name="downtime_schedule.dat" role="test" />
+      <file name="test.dat" role="test" />
+     </dir> <!-- /tests/data/help -->
+     <dir name="lists">
+      <file name="create.dat" role="test" />
+      <file name="delete.dat" role="test" />
+      <file name="list.dat" role="test" />
+      <file name="memberships.dat" role="test" />
+      <file name="show.dat" role="test" />
+      <file name="statuses.dat" role="test" />
+      <file name="subscriptions.dat" role="test" />
+      <file name="update.dat" role="test" />
+     </dir> <!-- /tests/data/lists -->
+     <dir name="list_members">
+      <file name="create.dat" role="test" />
+      <file name="delete.dat" role="test" />
+      <file name="list.dat" role="test" />
+      <file name="show.dat" role="test" />
+     </dir> <!-- /tests/data/list_members -->
+     <dir name="list_subscribers">
+      <file name="create.dat" role="test" />
+      <file name="delete.dat" role="test" />
+      <file name="list.dat" role="test" />
+      <file name="show.dat" role="test" />
+     </dir> <!-- /tests/data/list_subscribers -->
+     <dir name="notifications">
+      <file name="follow_leave.dat" role="test" />
+     </dir> <!-- /tests/data/notifications -->
+     <dir name="search">
+      <file name="search.dat" role="test" />
+     </dir> <!-- /tests/data/search -->
+     <dir name="statuses">
+      <file name="destroy.dat" role="test" />
+      <file name="followers.dat" role="test" />
+      <file name="friends.dat" role="test" />
+      <file name="friends_timeline.dat" role="test" />
+      <file name="public_timeline.dat" role="test" />
+      <file name="replies.dat" role="test" />
+      <file name="show.dat" role="test" />
+      <file name="update.dat" role="test" />
+      <file name="user_timeline.dat" role="test" />
+     </dir> <!-- /tests/data/statuses -->
+     <dir name="trends">
+      <file name="available.dat" role="test" />
+      <file name="daily.dat" role="test" />
+      <file name="location.dat" role="test" />
+      <file name="weekly.dat" role="test" />
+     </dir> <!-- /tests/data/trends -->
+     <dir name="users">
+      <file name="show.dat" role="test" />
+     </dir> <!-- /tests/data/users -->
+     <file name="background.jpg" role="test" />
+     <file name="options.dat" role="test" />
+     <file name="profile.png" role="test" />
+     <file name="utf8.dat" role="test" />
+    </dir> <!-- /tests/data -->
+    <file name="000-statuses-public_timeline.phpt" role="test" />
+    <file name="010-statuses-friends_timeline.phpt" role="test" />
+    <file name="020-statuses-user_timeline.phpt" role="test" />
+    <file name="030-statuses-show.phpt" role="test" />
+    <file name="040-statuses-update-destroy.phpt" role="test" />
+    <file name="060-statuses-friends.phpt" role="test" />
+    <file name="070-statuses-followers.phpt" role="test" />
+    <file name="100-users-show.phpt" role="test" />
+    <file name="150-lists-list.phpt" role="test" />
+    <file name="151-lists-update.phpt" role="test" />
+    <file name="152-lists-show.phpt" role="test" />
+    <file name="153-lists-create-delete.phpt" role="test" />
+    <file name="160-lists-statuses.phpt" role="test" />
+    <file name="161-lists-memberships.phpt" role="test" />
+    <file name="162-lists-subscriptions.phpt" role="test" />
+    <file name="180-list_members-create-delete.phpt" role="test" />
+    <file name="181-list_members-list.phpt" role="test" />
+    <file name="182-list_members-show.phpt" role="test" />
+    <file name="190-list_subscribers-create-delete.phpt" role="test" />
+    <file name="191-list_subscribers-list.phpt" role="test" />
+    <file name="192-list_subscribers-show.phpt" role="test" />
+    <file name="200-direct_messages.phpt" role="test" />
+    <file name="210-direct_messages-sent.phpt" role="test" />
+    <file name="220-direct_messages-new-destroy.phpt" role="test" />
+    <file name="300-friendships-create-destroy.phpt" role="test" />
+    <file name="310-friendships-exists.phpt" role="test" />
+    <file name="400-account-verify_credentials.phpt" role="test" />
+    <file name="410-account-end_session.phpt" role="test" />
+    <file name="430-account-update_delivery_device.phpt" role="test" />
+    <file name="440-account-rate_limit_status.phpt" role="test" />
+    <file name="450-account-update_profile_colors.phpt" role="test" />
+    <file name="460-account-update_profile_image.phpt" role="test" />
+    <file name="470-account-update_profile_background_image.phpt" role="test" />
+    <file name="480-account-update_profile.phpt" role="test" />
+    <file name="500-favorites.phpt" role="test" />
+    <file name="510-favorites-create-destroy.phpt" role="test" />
+    <file name="600-notifications-follow-leave.phpt" role="test" />
+    <file name="700-blocks-create-destroy.phpt" role="test" />
+    <file name="800-help-test.phpt" role="test" />
+    <file name="810-search.phpt" role="test" />
+    <file name="820-trends-daily.phpt" role="test" />
+    <file name="830-trends-weekly.phpt" role="test" />
+    <file name="840-trends-available.phpt" role="test" />
+    <file name="850-trends-location.phpt" role="test" />
+    <file name="900-exceptions.phpt" role="test" />
+    <file name="910-options.phpt" role="test" />
+    <file name="920-utf8.phpt" role="test" />
+    <file name="930-validation.phpt" role="test" />
+    <file name="940-oauth.phpt" role="test" />
+    <file name="950-ssl.phpt" role="test" />
+    <file name="AllTests.php" role="test">
+     <tasks:replace from="@package_version@" to="version" type="package-info" />
+    </file>
+    <file name="setup.php" role="test" />
+    <file name="tests-config.php.example" role="test" />
+   </dir> <!-- /tests -->
+  </dir> <!-- / -->
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.2.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0b1</min>
+   </pearinstaller>
+   <package>
+    <name>PEAR</name>
     <channel>pear.php.net</channel>
-    <summary>PHP interface to Twitter's API</summary>
-    <description>An interface for communicating with Twitter's public API. Send status updates, fetch information, add friends, etc.</description>
-    <lead>
-        <name>Joe Stump</name>
-        <user>jstump</user>
-        <email>joe@joestump.net</email>
-        <active>no</active>
-    </lead>
-    <lead>
-        <name>David Jean Louis</name>
-        <user>izi</user>
-        <email>izi@php.net</email>
-        <active>yes</active>
-    </lead>
-    <lead>
-        <name>Bill Shupp</name>
-        <user>shupp</user>
-        <email>hostmaster@shupp.org</email>
-        <active>yes</active>
-    </lead>
-    <date>2010-05-22</date>
-    <version>
-        <release>0.5.2</release>
-        <api>0.5.2</api>
-    </version>
-    <stability>
-        <release>beta</release>
-        <api>beta</api>
-    </stability>
-    <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
-    <notes>
-<![CDATA[
-* Updated statuses/update method : added lat, long, place_id and display_coordinates parameters (closes feature request #17421),
-* Fixed package.xml.
-]]>
-    </notes>
-    <contents>
-        <dir name="/">
-            <dir name="Services">
-                <file name="Twitter.php" role="php">
-                    <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
-                    <tasks:replace from="@package_version@" to="version" type="package-info" />
-                </file>
-                <dir name="Twitter">
-                    <file name="Exception.php" role="php">
-                        <tasks:replace from="@package_version@" to="version" type="package-info" />
-                    </file>
-                </dir>
-            </dir>
-            <dir name="data">
-                <file name="api.xml" role="data" />
-                <file name="api.rng" role="data" />
-            </dir>
-            <dir name="tests">
-                <file name="000-statuses-public_timeline.phpt" role="test"/>
-                <file name="010-statuses-friends_timeline.phpt" role="test"/>
-                <file name="020-statuses-user_timeline.phpt" role="test"/>
-                <file name="030-statuses-show.phpt" role="test"/>
-                <file name="040-statuses-update-destroy.phpt" role="test"/>
-                <file name="060-statuses-friends.phpt" role="test"/>
-                <file name="070-statuses-followers.phpt" role="test"/>
-                <file name="100-users-show.phpt" role="test"/>
-                <file name="200-direct_messages.phpt" role="test"/>
-                <file name="210-direct_messages-sent.phpt" role="test"/>
-                <file name="220-direct_messages-new-destroy.phpt" role="test"/>
-                <file name="300-friendships-create-destroy.phpt" role="test"/>
-                <file name="310-friendships-exists.phpt" role="test"/>
-                <file name="400-account-verify_credentials.phpt" role="test"/>
-                <file name="410-account-end_session.phpt" role="test"/>
-                <file name="430-account-update_delivery_device.phpt" role="test"/>
-                <file name="440-account-rate_limit_status.phpt" role="test"/>
-                <file name="460-account-update_profile_image.phpt" role="test"/>
-                <file name="470-account-update_profile_background_image.phpt" role="test"/>
-                <file name="480-account-update_profile.phpt" role="test"/>
-                <file name="450-account-update_profile_colors.phpt" role="test"/>
-                <file name="500-favorites.phpt" role="test"/>
-                <file name="510-favorites-create-destroy.phpt" role="test"/>
-                <file name="600-notifications-follow-leave.phpt" role="test"/>
-                <file name="700-blocks-create-destroy.phpt" role="test"/>
-                <file name="800-help-test.phpt" role="test"/>
-                <file name="810-search.phpt" role="test"/>
-                <file name="820-trends-daily.phpt" role="test"/>
-                <file name="830-trends-weekly.phpt" role="test"/>
-                <file name="900-exceptions.phpt" role="test"/>
-                <file name="910-options.phpt" role="test"/>
-                <file name="920-utf8.phpt" role="test"/>
-                <file name="930-validation.phpt" role="test"/>
-                <file name="940-oauth.phpt" role="test"/>
-                <file name="950-ssl.phpt" role="test"/>
-                <file name="AllTests.php" role="test">
-                    <tasks:replace from="@package_version@" to="version" type="package-info" />
-                </file>
-                <file name="setup.php" role="test"/>
-                <file name="tests-config.php.example" role="test"/>
-                <dir name="data">
-                    <file name="background.jpg" role="test" />
-                    <file name="options.dat" role="test" />
-                    <file name="profile.png" role="test" />
-                    <file name="utf8.dat" role="test" />
-                    <dir name="statuses">
-                        <file name="destroy.dat" role="test"/>
-                        <file name="followers.dat" role="test"/>
-                        <file name="friends.dat" role="test"/>
-                        <file name="friends_timeline.dat" role="test"/>
-                        <file name="public_timeline.dat" role="test"/>
-                        <file name="replies.dat" role="test"/>
-                        <file name="show.dat" role="test"/>
-                        <file name="update.dat" role="test"/>
-                        <file name="user_timeline.dat" role="test"/>
-                    </dir>
-                    <dir name="users">
-                        <file name="show.dat" role="test"/>
-                    </dir>
-                    <dir name="direct_messages">
-                        <file name="destroy_new.dat" role="test"/>
-                        <file name="direct_messages.dat" role="test"/>
-                        <file name="sent.dat" role="test"/>
-                    </dir>
-                    <dir name="friendships">
-                        <file name="create_destroy.dat" role="test"/>
-                        <file name="exists1.dat" role="test"/>
-                        <file name="exists2.dat" role="test"/>
-                        <file name="exists3.dat" role="test"/>
-                        <file name="exists4.dat" role="test"/>
-                    </dir>
-                    <dir name="account">
-                        <file name="end_session.dat" role="test"/>
-                        <file name="rate_limit_status.dat" role="test"/>
-                        <file name="update_delivery_device.dat" role="test"/>
-                        <file name="update_location.dat" role="test"/>
-                        <file name="update_profile.dat" role="test"/>
-                        <file name="update_profile_colors.dat" role="test"/>
-                        <file name="update_profile_background_image.dat" role="test"/>
-                        <file name="update_profile_image.dat" role="test"/>
-                        <file name="verify_credentials.dat" role="test"/>
-                    </dir>
-                    <dir name="help">
-                        <file name="downtime_schedule.dat" role="test"/>
-                        <file name="test.dat" role="test"/>
-                    </dir>
-                    <dir name="blocks">
-                        <file name="create_destroy.dat" role="test"/>
-                    </dir>
-                    <dir name="notifications">
-                        <file name="follow_leave.dat" role="test"/>
-                    </dir>
-                    <dir name="favorites">
-                        <file name="create.dat" role="test"/>
-                        <file name="destroy.dat" role="test"/>
-                        <file name="favorites.dat" role="test"/>
-                    </dir>
-                    <dir name="search">
-                        <file name="search.dat" role="test"/>
-                    </dir>
-                    <dir name="trends">
-                        <file name="daily.dat" role="test"/>
-                        <file name="weekly.dat" role="test"/>
-                    </dir>
-                </dir>
-            </dir>
-        </dir>
-    </contents>
-    <dependencies>
-        <required>
-            <php>
-                <min>5.2.0</min>
-            </php>
-            <pearinstaller>
-                <min>1.4.0b1</min>
-            </pearinstaller>
-            <package>
-                <name>HTTP_Request2</name>
-                <channel>pear.php.net</channel>
-            </package>
-            <extension>
-                <name>json</name>
-            </extension>
-            <extension>
-                <name>mbstring</name>
-            </extension>
-        </required>
-        <optional>
-            <package>
-                <name>HTTP_OAuth</name>
-                <channel>pear.php.net</channel>
-                <min>0.1.2</min>
-            </package>
-            <extension>
-                <name>simplexml</name>
-            </extension>
-        </optional>
-    </dependencies>
-    <phprelease />
-    <changelog>
-        <release>
-            <date>2008-07-07</date>
-            <version>
-                <release>0.0.3</release>
-                <api>0.0.3</api>
-            </version>
-            <stability>
-                <release>beta</release>
-                <api>beta</api>
-            </stability>
-            <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
-            <notes><![CDATA[
-* Added Services_Twitter_Common::setOption() to allow setting a timeout and modifying the HTTP User-Agent.
-            ]]></notes>
-        </release>
-        <release>
-            <date>2008-04-15</date>
-            <version>
-                <release>0.0.2</release>
-                <api>0.0.2</api>
-            </version>
-            <stability>
-                <release>beta</release>
-                <api>beta</api>
-            </stability>
-            <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
-            <notes><![CDATA[
+    <min>1.4.0</min>
+   </package>
+   <package>
+    <name>HTTP_Request2</name>
+    <channel>pear.php.net</channel>
+   </package>
+   <extension>
+    <name>json</name>
+   </extension>
+   <extension>
+    <name>mbstring</name>
+   </extension>
+   <extension>
+    <name>simplexml</name>
+   </extension>
+  </required>
+  <optional>
+   <package>
+    <name>HTTP_OAuth</name>
+    <channel>pear.php.net</channel>
+    <min>0.1.7</min>
+   </package>
+  </optional>
+ </dependencies>
+ <phprelease />
+ <changelog>
+  <release>
+   <date>2008-04-12</date>
+   <version>
+    <release>0.0.1</release>
+    <api>0.0.1</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
+   <notes>
+* Initial release
+   </notes>
+  </release>
+  <release>
+   <date>2008-04-15</date>
+   <version>
+    <release>0.0.2</release>
+    <api>0.0.2</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
+   <notes>
 * Added Services_Twitter_Account::expire_session() + tests
 * Added Services_Twitter_Account::archive() + tests
 * Added Services_Twitter::favorites() + tests
@@ -238,79 +277,58 @@
 * Added Services_Twitter_Favorites::destroy() + tests
 * Added Services_Twitter_Notifications::leave() + tests
 * Added Services_Twitter_Notifications::follow() + tests
-            ]]></notes>
-        </release>
-        <release>
-            <date>2008-04-12</date>
-            <version>
-                <release>0.0.1</release>
-                <api>0.0.1</api>
-            </version>
-            <stability>
-                <release>beta</release>
-                <api>beta</api>
-            </stability>
-            <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
-            <notes><![CDATA[
-* Initial release
-            ]]></notes>
-        </release>
-        <release>
-            <date>2008-07-26</date>
-            <version>
-                <release>0.2.0</release>
-                <api>0.2.0</api>
-            </version>
-            <stability>
-                <release>beta</release>
-                <api>beta</api>
-            </stability>
-            <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
-            <notes>
-<![CDATA[
-* Initial public release.
-]]>
-            </notes>
-        </release>
-        <release>
-
-            <date>2008-11-01</date>
-            <version>
-                <release>0.2.0</release>
-                <api>0.2.0</api>
-            </version>
-            <stability>
-                <release>beta</release>
-                <api>beta</api>
-            </stability>
-            <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
-            <notes>
-<![CDATA[
+   </notes>
+  </release>
+  <release>
+   <date>2008-07-07</date>
+   <version>
+    <release>0.0.3</release>
+    <api>0.0.3</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
+   <notes>
+* Added Services_Twitter_Common::setOption() to allow setting a timeout and modifying the HTTP User-Agent.
+   </notes>
+  </release>
+  <release>
+   <date>2008-11-01</date>
+   <version>
+    <release>0.2.0</release>
+    <api>0.2.0</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
+   <notes>
 * Fixed a bug in the Services_Twitter_Account::end_session() method (jstump)
 * Fixed a singleton problem that only allowed a single instance to ever run (#14840, izi)
 * Added ability to specify an in_reply_to_status_id when sending an update (#14714, jstump)
-* Added ability to specify a source using setOption('source', $source) that is sent with all requests (#14715, jstump)
-* Added ability to retrieve someone else's followers (#14936, davidc)
+* Added ability to specify a source using setOption(&apos;source&apos;, $source) that is sent with all requests (#14715, jstump)
+* Added ability to retrieve someone else&apos;s followers (#14936, davidc)
 * Added Services_Twitter_Account::update_location() method (jstump)
 * Added Services_Twitter_Account::update_delivery_device() method (jstump)
 * Added Services_Twitter_Search::trends() method (jstump)
 * Added Services_Twitter_Search::query() method (jstump)
-]]>
-            </notes>
-        </release>
-        <release>
-            <date>2009-08-26</date>
-            <version>
-                <release>0.3.0</release>
-                <api>0.3.0</api>
-            </version>
-            <stability>
-                <release>beta</release>
-                <api>beta</api>
-            </stability>
-            <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
-            <notes>
-<![CDATA[
+   </notes>
+  </release>
+  <release>
+   <date>2009-08-26</date>
+   <version>
+    <release>0.3.0</release>
+    <api>0.3.0</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
+   <notes>
 This is a major update of Services_Twitter with some backward incompatible changes. 
 Please read this carefully before upgrading.
 
@@ -333,22 +351,22 @@ Search API changes:
 
 REST API changes:
 -----------------
-* statuses/friends_timeline: removed "since" parameter (no longer supported) and added "max_id" parameter [izi]
-* statuses/user_timeline: removed "since" parameter (no longer supported) and added "user_id" and "screen_name" parameters [izi]
+* statuses/friends_timeline: removed &quot;since&quot; parameter (no longer supported) and added &quot;max_id&quot; parameter [izi]
+* statuses/user_timeline: removed &quot;since&quot; parameter (no longer supported) and added &quot;user_id&quot; and &quot;screen_name&quot; parameters [izi]
 + added statuses/mentions method (fixes bug #16475) [izi]
 - removed statuses/replies (no longer supported) [izi]
-* statuses/friends: removed "since" parameter (no longer supported) and added "user_id" and "screen_name" parameters [izi]
-* statuses/followers: added "user_id" and "screen_name" parameters [izi]
-* direct_messages: removed "since" parameter (no longer supported) and added "max_id" and "count" parameters [izi]
-* direct_messages/sent: removed "since" parameter (no longer supported) and added "max_id" and "count" parameters [izi]
-* direct_messages/new: added "user_id" and "screen_name" parameters [izi]
-* friendships/create: added "user_id" and "screen_name" parameters [izi]
-* friendships/destroy: added "user_id" and "screen_name" parameters [izi]
-* users/show: removed "email" parameter, no longer supported by the API [izi]
+* statuses/friends: removed &quot;since&quot; parameter (no longer supported) and added &quot;user_id&quot; and &quot;screen_name&quot; parameters [izi]
+* statuses/followers: added &quot;user_id&quot; and &quot;screen_name&quot; parameters [izi]
+* direct_messages: removed &quot;since&quot; parameter (no longer supported) and added &quot;max_id&quot; and &quot;count&quot; parameters [izi]
+* direct_messages/sent: removed &quot;since&quot; parameter (no longer supported) and added &quot;max_id&quot; and &quot;count&quot; parameters [izi]
+* direct_messages/new: added &quot;user_id&quot; and &quot;screen_name&quot; parameters [izi]
+* friendships/create: added &quot;user_id&quot; and &quot;screen_name&quot; parameters [izi]
+* friendships/destroy: added &quot;user_id&quot; and &quot;screen_name&quot; parameters [izi]
+* users/show: removed &quot;email&quot; parameter, no longer supported by the API [izi]
 + added friendships/show method [izi]
-+ added "Social Graph methods": friends/ids and followers/ids [izi]
-* notifications/follow: added "user_id" and "screen_name" parameters [izi]
-* notifications/leave: added "user_id" and "screen_name" parameters [izi]
++ added &quot;Social Graph methods&quot;: friends/ids and followers/ids [izi]
+* notifications/follow: added &quot;user_id&quot; and &quot;screen_name&quot; parameters [izi]
+* notifications/leave: added &quot;user_id&quot; and &quot;screen_name&quot; parameters [izi]
 + added account/update_profile_colors [izi]
 + added account/update_delivery_device [izi]
 + added account/update_profile_image [izi]
@@ -364,26 +382,23 @@ REST API changes:
 
 *** IMPORTANT: BACKWARD INCOMPATIBLE CHANGES ***
 
-- $twitter->search->query() has been replaced by $twitter->search() (you can also write $twitter->search->search())
-- the twitter API has changed, so some methods have been updated, removed or added (see above), you'll have probably to update your code
+- $twitter-&gt;search-&gt;query() has been replaced by $twitter-&gt;search() (you can also write $twitter-&gt;search-&gt;search())
+- the twitter API has changed, so some methods have been updated, removed or added (see above), you&apos;ll have probably to update your code
 - there are maybe some others incompatible changes, but it will be trivial to update your code
-
-]]>
-            </notes>
-        </release>
-        <release>
-            <date>2009-09-14</date>
-            <version>
-                <release>0.4.0</release>
-                <api>0.4.0</api>
-            </version>
-            <stability>
-                <release>beta</release>
-                <api>beta</api>
-            </stability>
-            <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
-            <notes>
-<![CDATA[
+   </notes>
+  </release>
+  <release>
+   <date>2009-09-14</date>
+   <version>
+    <release>0.4.0</release>
+    <api>0.4.0</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
+   <notes>
 New Features:
 -------------
 * OAuth support [shupp]
@@ -394,22 +409,20 @@ Fixes/improvements:
 * Fixed a bug in UTF8 detection [izi]
 * Fixed some unit tests [izi]
 * make use of setOption/getOption internally instead of manipulating the options array directly [izi]
-]]>
-            </notes>
-        </release>
-        <release>
-            <date>2010-01-06</date>
-            <version>
-                <release>0.5.0</release>
-                <api>0.5.0</api>
-            </version>
-            <stability>
-                <release>beta</release>
-                <api>beta</api>
-            </stability>
-            <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
-            <notes>
-<![CDATA[
+   </notes>
+  </release>
+  <release>
+   <date>2010-01-06</date>
+   <version>
+    <release>0.5.0</release>
+    <api>0.5.0</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
+   <notes>
 REST API changes:
 -----------------
 + added statuses/home_timeline method,
@@ -432,27 +445,40 @@ Other changes:
 --------------
 * fixed screenname regex,
 * fixed and improved some tests.
-
-]]>
-            </notes>
-        </release>
-        <release>
-            <date>2010-02-28</date>
-            <version>
-                <release>0.5.1</release>
-                <api>0.5.1</api>
-            </version>
-            <stability>
-                <release>beta</release>
-                <api>beta</api>
-            </stability>
-            <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
-            <notes>
-<![CDATA[
+   </notes>
+  </release>
+  <release>
+   <date>2010-02-28</date>
+   <version>
+    <release>0.5.1</release>
+    <api>0.5.1</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
+   <notes>
 * Fixed bug #17075.  Wrong test in package
 * Added mb_string requirement after reported issues
-]]>
-            </notes>
-        </release>
-    </changelog>
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.6.0</release>
+    <api>0.6.0</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2010-06-01</date>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
+   <notes>
+* Updated statuses/update method : added lat, long, place_id and display_coordinates parameters (closes feature request #17421)
+* Added lists and trends support from http://blog.cheki.net/archives/1618
+* Added generatePackage.php for easy package.xml management
+   </notes>
+  </release>
+ </changelog>
 </package>

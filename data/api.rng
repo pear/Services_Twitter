@@ -30,6 +30,7 @@
                         <choice>
                             <value>GET</value>
                             <value>POST</value>
+                            <value>DELETE</value>
                         </choice>
                     </attribute>
                     <attribute name="auth_required">
@@ -38,6 +39,11 @@
                     <optional>
                         <attribute name="min_args">
                             <data type="integer"/>
+                        </attribute>
+                    </optional>
+                    <optional>
+                        <attribute name="routing">
+                            <data type="string"/>
                         </attribute>
                     </optional>
                     <interleave>
@@ -67,6 +73,8 @@
                                         <value>long</value>
                                         <value>image</value>
                                         <value>color</value>
+                                        <value>listid_or_slug</value>
+                                        <value>mode</value>
                                     </choice>
                                 </attribute>
                                 <attribute name="required">
