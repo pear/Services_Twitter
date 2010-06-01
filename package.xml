@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package packagerversion="1.9.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+<package packagerversion="1.9.0" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
     http://pear.php.net/dtd/tasks-1.0.xsd
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
@@ -25,8 +25,8 @@
   <email>joe@joestump.net</email>
   <active>yes</active>
  </lead>
- <date>2010-05-31</date>
- <time>18:06:04</time>
+ <date>2010-06-01</date>
+ <time>12:57:12</time>
  <version>
   <release>0.6.0</release>
   <api>0.6.0</api>
@@ -37,6 +37,7 @@
  </stability>
  <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
  <notes>
+* Updated statuses/update method : added lat, long, place_id and display_coordinates parameters (closes feature request #17421)
 * Added lists and trends support from http://blog.cheki.net/archives/1618
 * Added generatePackage.php for easy package.xml management
  </notes>
@@ -48,9 +49,14 @@
    </dir> <!-- /data -->
    <dir name="Services">
     <dir name="Twitter">
-     <file name="Exception.php" role="php" />
+     <file name="Exception.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
     </dir> <!-- /Services/Twitter -->
-    <file name="Twitter.php" role="php" />
+    <file name="Twitter.php" role="php">
+     <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
+     <tasks:replace from="@package_version@" to="version" type="package-info" />
+    </file>
    </dir> <!-- /Services -->
    <dir name="tests">
     <dir name="data">
@@ -192,7 +198,9 @@
     <file name="930-validation.phpt" role="test" />
     <file name="940-oauth.phpt" role="test" />
     <file name="950-ssl.phpt" role="test" />
-    <file name="AllTests.php" role="test" />
+    <file name="AllTests.php" role="test">
+     <tasks:replace from="@package_version@" to="version" type="package-info" />
+    </file>
     <file name="setup.php" role="test" />
     <file name="tests-config.php.example" role="test" />
    </dir> <!-- /tests -->
@@ -464,9 +472,10 @@ Other changes:
     <release>beta</release>
     <api>beta</api>
    </stability>
-   <date>2010-05-31</date>
+   <date>2010-06-01</date>
    <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
    <notes>
+* Updated statuses/update method : added lat, long, place_id and display_coordinates parameters (closes feature request #17421)
 * Added lists and trends support from http://blog.cheki.net/archives/1618
 * Added generatePackage.php for easy package.xml management
    </notes>

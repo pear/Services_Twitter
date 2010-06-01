@@ -11,7 +11,7 @@ $packagexml->setOptions(array(
     'simpleoutput'      => true,
     'packagedirectory'  => './',
     'filelistgenerator' => 'file',
-    'ignore'            => array('runTests.php', 'generatePackage.php'),
+    'ignore'            => array('runTests.php', 'generatePackage.php', 'coverage/'),
     'dir_roles' => array(
         'tests'     => 'test',
         'data'      => 'data',
@@ -34,6 +34,7 @@ $packagexml->setReleaseStability('beta');
 $packagexml->setAPIStability('beta');
 
 $packagexml->setNotes('
+* Updated statuses/update method : added lat, long, place_id and display_coordinates parameters (closes feature request #17421)
 * Added lists and trends support from http://blog.cheki.net/archives/1618
 * Added generatePackage.php for easy package.xml management
 ');
@@ -68,6 +69,11 @@ $packagexml->addPackageDepWithChannel('optional', 'HTTP_OAuth', 'pear.php.net', 
 $packagexml->addExtensionDep('required', 'json'); 
 $packagexml->addExtensionDep('required', 'mbstring'); 
 $packagexml->addExtensionDep('required', 'simplexml'); 
+
+$packagexml->addReplacement('Services/Twitter.php', 'pear-config', '@data_dir@', 'data_dir'); 
+$packagexml->addReplacement('Services/Twitter.php', 'package-info', '@package_version@', 'version'); 
+$packagexml->addReplacement('Services/Twitter/Exception.php', 'package-info', '@package_version@', 'version'); 
+$packagexml->addReplacement('tests/AllTests.php', 'package-info', '@package_version@', 'version'); 
 
 $packagexml->generateContents();
 $packagexml->writePackageFile();
