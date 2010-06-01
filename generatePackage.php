@@ -11,7 +11,12 @@ $packagexml->setOptions(array(
     'simpleoutput'      => true,
     'packagedirectory'  => './',
     'filelistgenerator' => 'file',
-    'ignore'            => array('runTests.php', 'generatePackage.php', 'coverage/'),
+    'ignore'            => array(
+        'runTests.php',
+        'tests/tests-config.php',
+        'generatePackage.php',
+        'coverage/'
+    ),
     'dir_roles' => array(
         'tests'     => 'test',
         'data'      => 'data',
