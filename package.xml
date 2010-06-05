@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package packagerversion="1.9.0" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+<package packagerversion="1.9.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
     http://pear.php.net/dtd/tasks-1.0.xsd
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
@@ -25,10 +25,10 @@
   <email>joe@joestump.net</email>
   <active>yes</active>
  </lead>
- <date>2010-06-01</date>
- <time>12:57:12</time>
+ <date>2010-06-05</date>
+ <time>11:44:33</time>
  <version>
-  <release>0.6.0</release>
+  <release>0.6.1</release>
   <api>0.6.0</api>
  </version>
  <stability>
@@ -37,9 +37,7 @@
  </stability>
  <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
  <notes>
-* Updated statuses/update method : added lat, long, place_id and display_coordinates parameters (closes feature request #17421)
-* Added lists and trends support from http://blog.cheki.net/archives/1618
-* Added generatePackage.php for easy package.xml management
+* Fixed #17345.  Use internal errors for libxml to surpress warnings
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -478,6 +476,21 @@ Other changes:
 * Updated statuses/update method : added lat, long, place_id and display_coordinates parameters (closes feature request #17421)
 * Added lists and trends support from http://blog.cheki.net/archives/1618
 * Added generatePackage.php for easy package.xml management
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.6.1</release>
+    <api>0.6.0</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2010-06-05</date>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
+   <notes>
+* Fixed #17345.  Use internal errors for libxml to surpress warnings
    </notes>
   </release>
  </changelog>

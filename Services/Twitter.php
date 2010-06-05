@@ -528,7 +528,10 @@ class Services_Twitter
     {
 
         if ($this->getOption('format') == Services_Twitter::OUTPUT_XML) {
-            $result = simplexml_load_string($body);
+            // See http://pear.php.net/bugs/bug.php?id=17345
+            $previousSetting = libxml_use_internal_errors(true);
+            $result          = simplexml_load_string($body);
+            libxml_use_internal_errors($previousSetting);
             $isbool = ((string)$result == 'true' || (string)$result == 'false');
         } else { 
             // default to Services_Twitter::OUTPUT_JSON

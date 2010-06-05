@@ -32,16 +32,14 @@ $packagexml->setDescription(
 
 $packagexml->setChannel('pear.php.net');
 $packagexml->setAPIVersion('0.6.0');
-$packagexml->setReleaseVersion('0.6.0');
+$packagexml->setReleaseVersion('0.6.1');
 
 $packagexml->setReleaseStability('beta');
 
 $packagexml->setAPIStability('beta');
 
 $packagexml->setNotes('
-* Updated statuses/update method : added lat, long, place_id and display_coordinates parameters (closes feature request #17421)
-* Added lists and trends support from http://blog.cheki.net/archives/1618
-* Added generatePackage.php for easy package.xml management
+* Fixed #17345.  Use internal errors for libxml to surpress warnings
 ');
 $packagexml->setPackageType('php');
 $packagexml->addRelease();
