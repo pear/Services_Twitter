@@ -25,10 +25,10 @@
   <email>joe@joestump.net</email>
   <active>yes</active>
  </lead>
- <date>2010-06-05</date>
- <time>11:44:33</time>
+ <date>2010-08-08</date>
+ <time>23:28:13</time>
  <version>
-  <release>0.6.1</release>
+  <release>0.6.2</release>
   <api>0.6.0</api>
  </version>
  <stability>
@@ -37,7 +37,7 @@
  </stability>
  <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
  <notes>
-* Fixed #17345.  Use internal errors for libxml to surpress warnings
+* Search and routing fixes from nocontents@gmail.com
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -491,6 +491,21 @@ Other changes:
    <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
    <notes>
 * Fixed #17345.  Use internal errors for libxml to surpress warnings
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.6.2</release>
+    <api>0.6.0</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2010-08-08</date>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
+   <notes>
+* Search and routing fixes from nocontents@gmail.com
    </notes>
   </release>
  </changelog>

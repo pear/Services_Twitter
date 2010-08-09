@@ -32,14 +32,14 @@ $packagexml->setDescription(
 
 $packagexml->setChannel('pear.php.net');
 $packagexml->setAPIVersion('0.6.0');
-$packagexml->setReleaseVersion('0.6.1');
+$packagexml->setReleaseVersion('0.6.2');
 
 $packagexml->setReleaseStability('beta');
 
 $packagexml->setAPIStability('beta');
 
 $packagexml->setNotes('
-* Fixed #17345.  Use internal errors for libxml to surpress warnings
+* Search and routing fixes from nocontents@gmail.com
 ');
 $packagexml->setPackageType('php');
 $packagexml->addRelease();
