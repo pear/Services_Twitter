@@ -237,6 +237,12 @@ http://pear.php.net/packages/Services_Twitter
             <param name="user_id" type="id_or_screenname" required="false"/>
             <param name="screen_name" type="id_or_screenname" required="false"/>
         </endpoint>
+        <endpoint name="lookup" method="GET" auth_required="true" min_args="1">
+            <formats>xml,json</formats>
+            <param name="user_id" type="string" required="false"/>
+            <param name="screen_name" type="string" required="false"/>
+            <param name="include_entities" type="boolean" required="false"/>
+        </endpoint>
         <endpoint name="search" method="GET" auth_required="false">
             <formats>xml,json</formats>
             <param name="q" type="string" required="true"/>
@@ -462,13 +468,15 @@ http://pear.php.net/packages/Services_Twitter
         <endpoint name="search" method="GET" auth_required="false">
             <formats>json,atom</formats>
             <param name="q" type="string" required="true"/>
-            <param name="rpp" type="integer" required="false"/>
             <param name="lang" type="iso-639-1" required="false"/>
             <param name="locale" type="string" required="false"/>
+            <param name="rpp" type="integer" required="false"/>
             <param name="page" type="integer" required="false"/>
             <param name="since_id" type="integer" required="false"/>
+            <param name="until" type="date" required="false"/>
             <param name="geocode" type="geocode" required="false"/>
             <param name="show_user" type="boolean" required="false"/>
+            <param name="result_type" type="string" required="false"/>
         </endpoint>
     </category>
     <category name="trends">
@@ -497,6 +505,26 @@ http://pear.php.net/packages/Services_Twitter
         <endpoint name="location" method="GET" auth_required="false" min_args="1" routing="/trends/:woeid">
             <formats>xml,json</formats>
             <param name="woeid" type="integer" required="true"/>
+        </endpoint>
+    </category>
+    
+    <!-- Geo API Methods -->
+    <category name="geo">
+        <endpoint name="search" method="GET" min_args="1" auth_required="false">
+            <formats>json</formats>
+            <param name="lat" type="lat" required="false"/>
+            <param name="long" type="long" required="false"/>
+            <param name="query" type="string" required="false"/>
+            <param name="ip" type="string" required="false"/>
+            <param name="granularity" type="string" required="false"/>
+            <param name="accuracy" type="string" required="false"/>
+            <param name="max_results" type="integer" required="false"/>
+            <param name="contained_within" type="string" required="false"/>
+            <param name="autocomplete" type="boolean" required="false"/>
+        </endpoint>
+        <endpoint name="id" method="GET" auth_required="true" routing="/geo/id/:place_id">
+            <formats>json</formats>
+            <param name="place_id" type="string" required="true"/>
         </endpoint>
     </category>
 
