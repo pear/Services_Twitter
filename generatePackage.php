@@ -32,14 +32,15 @@ $packagexml->setDescription(
 
 $packagexml->setChannel('pear.php.net');
 $packagexml->setAPIVersion('0.6.0');
-$packagexml->setReleaseVersion('0.6.2');
+$packagexml->setReleaseVersion('0.6.3');
 
 $packagexml->setReleaseStability('beta');
 
 $packagexml->setAPIStability('beta');
 
 $packagexml->setNotes('
-* Search and routing fixes from nocontents@gmail.com
+* Applied patch from steve_twitpic: support for users/lookup, geo/search, and geo/id (fixes #17694)
+* Updated the search endpoint
 ');
 $packagexml->setPackageType('php');
 $packagexml->addRelease();

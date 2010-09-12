@@ -25,10 +25,10 @@
   <email>joe@joestump.net</email>
   <active>yes</active>
  </lead>
- <date>2010-08-08</date>
- <time>23:28:13</time>
+ <date>2010-09-12</date>
+ <time>10:58:16</time>
  <version>
-  <release>0.6.2</release>
+  <release>0.6.3</release>
   <api>0.6.0</api>
  </version>
  <stability>
@@ -37,7 +37,8 @@
  </stability>
  <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
  <notes>
-* Search and routing fixes from nocontents@gmail.com
+* Applied patch from steve_twitpic: support for users/lookup, geo/search, and geo/id (fixes #17694)
+* Updated the search endpoint
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -506,6 +507,22 @@ Other changes:
    <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
    <notes>
 * Search and routing fixes from nocontents@gmail.com
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.6.3</release>
+    <api>0.6.0</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2010-09-12</date>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
+   <notes>
+* Applied patch from steve_twitpic: support for users/lookup, geo/search, and geo/id (fixes #17694)
+* Updated the search endpoint
    </notes>
   </release>
  </changelog>
