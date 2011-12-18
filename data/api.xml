@@ -54,6 +54,10 @@ http://pear.php.net/packages/Services_Twitter
             <param name="count" type="integer" max_length="200" required="false"/>
             <param name="page" type="integer" required="false"/>
         </endpoint>
+        <endpoint name="retweeted_by_ids" method="GET" auth_required="true" routing="/statuses/:id/retweeted_by/ids">
+            <formats>xml,json</formats>
+            <param name="id" type="integer" required="true"/>
+        </endpoint>
         <endpoint name="retweeted_by_me" method="GET" auth_required="true">
             <formats>xml,json,rss,atom</formats>
             <param name="since_id" type="integer" required="false"/>
