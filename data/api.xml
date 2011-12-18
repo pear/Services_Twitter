@@ -46,6 +46,9 @@ http://pear.php.net/packages/Services_Twitter
             <param name="max_id" type="integer" required="false"/>
             <param name="count" type="integer" max_length="200" required="false"/>
             <param name="page" type="integer" required="false"/>
+            <param name="trim_user" type="boolean" required="false"/>
+            <param name="include_rts" type="boolean" required="false"/>
+            <param name="include_entities" type="boolean" required="false"/>
         </endpoint>
         <endpoint name="mentions" method="GET" auth_required="true">
             <formats>xml,json,rss,atom</formats>
