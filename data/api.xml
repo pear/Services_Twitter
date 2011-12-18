@@ -531,5 +531,13 @@ http://pear.php.net/packages/Services_Twitter
             <param name="place_id" type="string" required="true"/>
         </endpoint>
     </category>
+    
+	<!-- Related Results Methods -->
+	<category name="related_results">
+        <endpoint name="show" method="GET" auth_required="true" routing="/related_results/show/:id">
+            <formats>xml,json</formats>
+            <param name="id" type="integer" required="true"/>
+        </endpoint>
+    </category>
 
 </api>
