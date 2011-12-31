@@ -197,9 +197,6 @@
     <file name="930-validation.phpt" role="test" />
     <file name="940-oauth.phpt" role="test" />
     <file name="950-ssl.phpt" role="test" />
-    <file name="AllTests.php" role="test">
-     <tasks:replace from="@package_version@" to="version" type="package-info" />
-    </file>
     <file name="setup.php" role="test" />
     <file name="tests-config.php.example" role="test" />
    </dir> <!-- /tests -->
