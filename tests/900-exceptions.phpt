@@ -92,5 +92,5 @@ Could not authenticate you. (code: 401, call: http://api.twitter.com/1/statuses/
 bool(true)
 Not Found (code: 404, call: http://example.com/statuses/show/1234.json)
 bool(true)
-Absolute URL required (code: 0, call: this is a bad url indeed.../statuses/public_timeline.json)
+HTTP_Request2 needs an absolute HTTP(S) request URL, 'this is a bad url indeed.../statuses/public_timeline.json' given (code: 0, call: this is a bad url indeed.../statuses/public_timeline.json)
 bool(true)
