@@ -49,6 +49,8 @@ http://pear.php.net/packages/Services_Twitter
             <param name="trim_user" type="boolean" required="false"/>
             <param name="include_rts" type="boolean" required="false"/>
             <param name="include_entities" type="boolean" required="false"/>
+            <param name="exclude_replies" type="boolean" required="false"/>
+            <param name="contributor_details" type="boolean" required="false"/>
         </endpoint>
         <endpoint name="mentions" method="GET" auth_required="true">
             <formats>xml,json,rss,atom</formats>
