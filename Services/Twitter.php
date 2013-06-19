@@ -38,7 +38,7 @@ require_once 'Services/Twitter/Exception.php';
  * $password = 'Your_Password';
  *
  * try {
- *     $twitter = new Services_Twitter($username, $password);
+ *     $twitter = new Services_Twitter($username, $password, array('use_ssl' => true));
  *     $msg = $twitter->statuses->update("I'm coding with PEAR right now!");
  *     print_r($msg);
  * } catch (Services_Twitter_Exception $e) {
@@ -55,7 +55,7 @@ require_once 'Services/Twitter/Exception.php';
  *
  *
  * try {
- *     $twitter = new Services_Twitter();
+ *     $twitter = new Services_Twitter(null, null, array('use_ssl' => true));
  *     $oauth   = new HTTP_OAuth_Consumer('consumer_key',
  *                                        'consumer_secret',
  *                                        'auth_token',
@@ -112,7 +112,7 @@ class Services_Twitter
      *
      * @var string $uri
      */
-    public static $uri = 'http://api.twitter.com/1';
+    public static $uri = 'http://api.twitter.com/1.1';
 
     /**
      * Public URI of Twitter's Search API
