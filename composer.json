@@ -25,7 +25,7 @@
     "include-path": [
         "./"
     ],
-    "license": "New BSD License",
+    "license": "BSD-2-Clause",
     "name": "pear/services_twitter",
     "support": {
         "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name[]=Services_Twitter",
@@ -33,8 +33,7 @@
     },
     "type": "library",
     "require": {
-        "pear/pear_exception": "*",
-        "pear/pear": "*"
+        "pear/pear_exception": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "*"
