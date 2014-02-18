@@ -1,0 +1,44 @@
+{
+    "authors": [
+        {
+            "email": "shupp@php.net",
+            "name": "Bill Shupp",
+            "role": "Lead"
+        },
+        {
+            "email": "izi@php.net",
+            "name": "David Jean Louis",
+            "role": "Lead"
+        },
+        {
+            "email": "joe@joestump.net",
+            "name": "Joe Stump",
+            "role": "Lead"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "Services": "./"
+        }
+    },
+    "description": "More info available on: http://pear.php.net/package/Services_Twitter",
+    "include-path": [
+        "./"
+    ],
+    "license": "BSD-2-Clause",
+    "name": "pear/services_twitter",
+    "support": {
+        "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name[]=Services_Twitter",
+        "source": "https://github.com/pear/Services_Twitter"
+    },
+    "type": "library",
+    "require": {
+        "pear/pear_exception": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
+    "suggest": {
+        "pear/http_oauth": "Install optionally via your project's composer.json"
+    }
+}
