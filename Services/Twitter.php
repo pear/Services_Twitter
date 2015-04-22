@@ -681,7 +681,7 @@ class Services_Twitter
                 $routing[array_search(':' . $pName, $routing)] = rawurlencode($arg);
             } else {
                 if ($pName == 'id') {
-                     if (count($routing) > 1) {
+                     if (count($routing) > 1 || $cat==='favorites') {
                          $params[$pName] = $arg;
                          if ($method == 'DELETE') {
                              $method = "POST";
