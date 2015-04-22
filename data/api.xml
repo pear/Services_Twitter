@@ -386,6 +386,15 @@ http://pear.php.net/packages/Services_Twitter
             <param name="id" type="id_or_screenname" required="false"/>
             <param name="page" type="integer" required="false"/>
         </endpoint>
+        <endpoint name="list" method="GET" auth_required="true">
+            <formats>json</formats>
+            <param name="user_id" type="integer" required="false"/>
+            <param name="screen_name" type="id_or_screenname" required="false"/>
+            <param name="count" type="integer" required="false"/>
+            <param name="since_id" type="integer" required="false"/>
+            <param name="max_id" type="integer" required="false"/>
+            <param name="include_entities" type="boolean" required="false"/>
+        </endpoint>
         <endpoint name="create" method="POST" auth_required="true">
             <formats>xml,json</formats>
             <param name="id" type="integer" required="true"/>
@@ -394,6 +403,7 @@ http://pear.php.net/packages/Services_Twitter
         <endpoint name="destroy" method="POST" auth_required="true">
             <formats>xml,json</formats>
             <param name="id" type="integer" required="true"/>
+            <param name="include_entities" type="boolean" required="false"/>
         </endpoint>
     </category>
 
