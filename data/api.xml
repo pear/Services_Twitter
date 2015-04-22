@@ -389,6 +389,7 @@ http://pear.php.net/packages/Services_Twitter
         <endpoint name="create" method="POST" auth_required="true">
             <formats>xml,json</formats>
             <param name="id" type="integer" required="true"/>
+            <param name="include_entities" type="boolean" required="false"/>
         </endpoint>
         <endpoint name="destroy" method="POST" auth_required="true">
             <formats>xml,json</formats>
