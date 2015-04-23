@@ -88,9 +88,9 @@ Not enough arguments for /statuses/update (code: 3, call: /statuses/update)
 Not enough arguments for /statuses/update
 /statuses/update
 Endpoint public_timeline does not support foo format
-Could not authenticate you. (code: 401, call: http://api.twitter.com/1/statuses/friends_timeline.json)
+Could not authenticate you. (code: 401, call: http://api.twitter.com/1.1/statuses/friends_timeline.json)
 bool(true)
 Not Found (code: 404, call: http://example.com/statuses/show/1234.json)
 bool(true)
-HTTP_Request2 needs an absolute HTTP(S) request URL, 'this is a bad url indeed.../statuses/public_timeline.json' given (code: 0, call: this is a bad url indeed.../statuses/public_timeline.json)
+HTTP_Request2 needs an absolute HTTP(S) request URL, 'this%20is%20a%20bad%20url%20indeed.../statuses/public_timeline.json' given (code: 0, call: this is a bad url indeed.../statuses/public_timeline.json)
 bool(true)
