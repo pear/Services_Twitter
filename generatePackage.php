@@ -15,6 +15,7 @@ $packagexml->setOptions(array(
         'runTests.php',
         'tests/tests-config.php',
         'generatePackage.php',
+        'composer.json',
         'coverage/'
     ),
     'dir_roles' => array(
@@ -31,16 +32,19 @@ $packagexml->setDescription(
 );
 
 $packagexml->setChannel('pear.php.net');
-$packagexml->setAPIVersion('0.6.0');
-$packagexml->setReleaseVersion('0.6.3');
+$packagexml->setAPIVersion('0.7.0');
+$packagexml->setReleaseVersion('0.7.0');
 
 $packagexml->setReleaseStability('beta');
 
 $packagexml->setAPIStability('beta');
 
 $packagexml->setNotes('
-* Applied patch from steve_twitpic: support for users/lookup, geo/search, and geo/id (fixes #17694)
-* Updated the search endpoint
+* Added composer support
+* Improved unit tests
+* Updated to API 1.1
+* Updated favorites API
+* Updated user_timeline API
 ');
 $packagexml->setPackageType('php');
 $packagexml->addRelease();
@@ -70,9 +74,9 @@ $packagexml->setPearinstallerDep('1.4.0b1');
 $packagexml->addPackageDepWithChannel('required', 'PEAR', 'pear.php.net', '1.4.0');
 $packagexml->addPackageDepWithChannel('required', 'HTTP_Request2', 'pear.php.net');
 $packagexml->addPackageDepWithChannel('optional', 'HTTP_OAuth', 'pear.php.net', '0.1.7');
-$packagexml->addExtensionDep('required', 'json'); 
-$packagexml->addExtensionDep('required', 'mbstring'); 
-$packagexml->addExtensionDep('required', 'simplexml'); 
+$packagexml->addExtensionDep('required', 'json');
+$packagexml->addExtensionDep('required', 'mbstring');
+$packagexml->addExtensionDep('required', 'simplexml');
 
 $packagexml->addReplacement('Services/Twitter.php', 'pear-config', '@data_dir@', 'data_dir'); 
 $packagexml->addReplacement('Services/Twitter.php', 'package-info', '@package_version@', 'version'); 
