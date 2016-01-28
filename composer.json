@@ -33,7 +33,12 @@
     },
     "type": "library",
     "require": {
-        "pear/pear_exception": "*"
+        "php": ">=5.2.0",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "ext-simplexml": "*",
+        "pear/http_request2": "^2.2.0",
+        "pear/pear_exception": "^1.0.0"
     },
     "require-dev": {
         "phpunit/phpunit": "*"
