@@ -38,7 +38,7 @@ require_once 'Services/Twitter/Exception.php';
  * $password = 'Your_Password';
  *
  * try {
- *     $twitter = new Services_Twitter($username, $password, array('use_ssl' => true));
+ *     $twitter = new Services_Twitter($username, $password);
  *     $msg = $twitter->statuses->update("I'm coding with PEAR right now!");
  *     print_r($msg);
  * } catch (Services_Twitter_Exception $e) {
@@ -55,7 +55,7 @@ require_once 'Services/Twitter/Exception.php';
  *
  *
  * try {
- *     $twitter = new Services_Twitter(null, null, array('use_ssl' => true));
+ *     $twitter = new Services_Twitter();
  *     $oauth   = new HTTP_OAuth_Consumer('consumer_key',
  *                                        'consumer_secret',
  *                                        'auth_token',
@@ -112,14 +112,14 @@ class Services_Twitter
      *
      * @var string $uri
      */
-    public static $uri = 'http://api.twitter.com/1.1';
+    public static $uri = 'https://api.twitter.com/1.1';
 
     /**
      * Public URI of Twitter's Search API
      *
      * @var string $uri
      */
-    public static $searchUri = 'http://search.twitter.com';
+    public static $searchUri = 'https://search.twitter.com';
 
     /**
      * Username of Twitter user
@@ -173,7 +173,6 @@ class Services_Twitter
         'format'     => self::OUTPUT_JSON,
         'raw_format' => false,
         'source'     => 'pearservicestwitter',
-        'use_ssl'    => false,
         'validate'   => false,
     );
 
@@ -491,11 +490,8 @@ class Services_Twitter
         if ($this->request === null) {
             $this->request = new HTTP_Request2();
         }
-        if ($this->getOption('use_ssl')) {
-            // XXX ssl won't work with ssl_verify_peer set to true, which is 
-            // the default in HTTP_Request2
-            $this->request->setConfig('ssl_verify_peer', false);
-        }
+        //use SSL
+        $this->request->setConfig('ssl_verify_peer', false);
         return $this->request;
     }
     
@@ -603,11 +599,6 @@ class Services_Twitter
             $uri = self::$searchUri;
         } else {
             $uri = self::$uri;
-        }
-
-        // ssl requested
-        if ($this->getOption('use_ssl')) {
-            $uri = str_replace('http://', 'https://', $uri);
         }
 
         // build the uri path
